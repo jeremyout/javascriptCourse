@@ -1,7 +1,7 @@
 /*
 * Values and Variables lesson and assignment
 */
-/* 
+/*
 let js = 'amazing';
 console.log(40 + 8 + 23 - 10);
 
@@ -67,6 +67,7 @@ console.log('language type: ' + typeof language);
 /*
  * let, const, and var
  */
+/*
 let age = 30;
 age = 31;
 
@@ -88,3 +89,53 @@ console.log(lastName);
 
 // Assignment
 const language = 'English';
+*/
+
+/*
+ * Basic Operators
+ */
+// Math Operators
+const currentYear = 2021;
+const ageJeremy = currentYear - 1990;
+const ageSarah = currentYear - 2018;
+console.log(ageSarah, ageJeremy);
+
+// 2 ** 3 means 2 to the power of 3
+console.log(ageJeremy * 2, ageJeremy / 10, 2 ** 3);
+
+const firstName = 'Jeremy';
+const lastName = 'Outinen';
+console.log(firstName + ' ' + lastName);
+
+//Assigment operators
+let x = 10 + 5; // 15
+x += 10; // x = x + 10 = 25
+x *= 4; // x = x * 4 = 100;
+x++; // x = x + 1 = 101;
+x--;
+x--;
+console.log(x);
+
+// Comparison Operators
+console.log(ageJeremy > ageSarah); // >, <, >=, <=
+console.log(ageSarah >= 18);
+
+// Assignment
+let population = 328;
+let avgPop = 33;
+let finlandPop = 6;
+
+// 1
+console.log(population / 2);
+// 2 
+console.log(population += 1);
+// 3
+console.log(population > finlandPop);
+//4
+console.log(population > avgPop);
+
+let country = 'United States';
+let continent = 'North America';
+const language = 'English';
+// 5
+console.log(country + ' is in ' + continent + ' and its ' + population + ' million peole speak ' + language);
