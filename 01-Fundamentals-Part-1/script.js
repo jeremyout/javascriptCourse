@@ -28,6 +28,7 @@ console.log('Population: ' + population + ' million');
 /*
 * Data types lesson and assignment
 */
+/*
 let javascriptIsFun = true;
 console.log(javascriptIsFun);
 
@@ -61,3 +62,29 @@ let country = 'United States';
 
 console.log('isIsland type: ' + typeof isIsland);
 console.log('language type: ' + typeof language);
+*/
+
+/*
+ * let, const, and var
+ */
+let age = 30;
+age = 31;
+
+const birthYear = 1990;
+// Errors out because you cannot change the value of a const
+// birthYear = 1991;
+
+// Errors out because you need to assign a const value at declaration
+// const job;
+
+var job = 'programmer';
+job = 'teacher';
+
+console.log(job);
+
+// Works but shouldn't be done
+lastName = 'Outinen';
+console.log(lastName);
+
+// Assignment
+const language = 'English';
