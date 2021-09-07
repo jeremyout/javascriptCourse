@@ -103,6 +103,7 @@ console.log(ageSarah >= 18);
 /*
 Operator Precedence
 */
+/*
 const currentYear = 2021;
 const ageJeremy = currentYear - 1990;
 const ageSarah = currentYear - 2018;
@@ -116,3 +117,27 @@ console.log(x, y);
 const avgAge = (ageJeremy + ageSarah) / 2;
 console.log(avgAge);
 console.log(ageJeremy, ageSarah);
+*/
+
+/*
+Strings and Template Literals
+*/
+const firstName = 'Jonas';
+const job = 'teacher';
+const birthYear = 1991;
+const year = 2037;
+
+const jonas = "I'm " + firstName + ', a ' + (year - birthYear) + ' year old ' + job + '!';
+console.log(jonas);
+
+const jonasNew = `I'm ${firstName}, a ${(year - birthYear)} year old ${job}!`;
+console.log(jonasNew);
+
+// Can use backticks for any regular strings
+console.log(`Just a regular string...`);
+
+console.log('String with \n\multiple \n\lines');
+
+console.log(`String
+with multiple
+lines`);
