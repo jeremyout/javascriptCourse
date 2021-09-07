@@ -1,5 +1,5 @@
 /*
-* Values and Variables lesson and assignment
+* Values and Variables lesson
 */
 /*
 let js = 'amazing';
@@ -15,18 +15,10 @@ let myFirstJob = 'Programmer';
 let myCurrentJob = 'Teacher';
 
 console.log(myFirstJob, myCurrentJob);
-
-let country = 'United States';
-let continent = 'North America';
-let population = 328;
-
-console.log('Country: ' + country);
-console.log('Continent: ' + continent);
-console.log('Population: ' + population + ' million');
 */
 
 /*
-* Data types lesson and assignment
+* Data types lesson
 */
 /*
 let javascriptIsFun = true;
@@ -51,17 +43,6 @@ console.log(typeof year);
 
 // Bug - shows up as an object
 console.log(typeof null);
-
-//new vars from this assignment
-let isIsland = false;
-let language;
-
-// repeat vars from the first assigment
-let population = 328;
-let country = 'United States';
-
-console.log('isIsland type: ' + typeof isIsland);
-console.log('language type: ' + typeof language);
 */
 
 /*
@@ -86,9 +67,6 @@ console.log(job);
 // Works but shouldn't be done
 lastName = 'Outinen';
 console.log(lastName);
-
-// Assignment
-const language = 'English';
 */
 
 /*
@@ -121,21 +99,3 @@ console.log(ageJeremy > ageSarah); // >, <, >=, <=
 console.log(ageSarah >= 18);
 
 // Assignment
-let population = 328;
-let avgPop = 33;
-let finlandPop = 6;
-
-// 1
-console.log(population / 2);
-// 2 
-console.log(population += 1);
-// 3
-console.log(population > finlandPop);
-//4
-console.log(population > avgPop);
-
-let country = 'United States';
-let continent = 'North America';
-const language = 'English';
-// 5
-console.log(country + ' is in ' + continent + ' and its ' + population + ' million peole speak ' + language);
