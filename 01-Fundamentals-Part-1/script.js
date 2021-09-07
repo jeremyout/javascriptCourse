@@ -72,6 +72,7 @@ console.log(lastName);
 /*
  * Basic Operators
  */
+/*
 // Math Operators
 const currentYear = 2021;
 const ageJeremy = currentYear - 1990;
@@ -97,5 +98,21 @@ console.log(x);
 // Comparison Operators
 console.log(ageJeremy > ageSarah); // >, <, >=, <=
 console.log(ageSarah >= 18);
+*/
 
-// Assignment
+/*
+Operator Precedence
+*/
+const currentYear = 2021;
+const ageJeremy = currentYear - 1990;
+const ageSarah = currentYear - 2018;
+
+console.log(currentYear - 1990 > currentYear - 2018);
+
+let x, y;
+x = y = 25 - 10 - 5;
+console.log(x, y);
+
+const avgAge = (ageJeremy + ageSarah) / 2;
+console.log(avgAge);
+console.log(ageJeremy, ageSarah);
