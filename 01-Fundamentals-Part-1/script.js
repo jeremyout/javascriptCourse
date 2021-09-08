@@ -147,7 +147,7 @@ lines`);
 /*
 Taking Decisions: if/else statements
 */
-
+/*
 const age = 15;
 
 if (age >= 18) {
@@ -165,3 +165,29 @@ if (birthYear <= 2000) {
     century = 21;
 }
 console.log(century);
+*/
+
+/*
+Type conversion and coercion
+*/
+//  Type conversion
+const inputYear = '1991';
+console.log(Number(inputYear), inputYear);
+console.log(inputYear + 18);
+
+console.log(Number('Jonas'));
+console.log(typeof NaN);
+
+console.log(String(23));
+
+// Type coercion
+// js converts all strings to numbers automatically
+// '+' operator converts all numbers to strings
+console.log('I am ' + 23 + ' years old');
+console.log('23' - '10' - 3);
+console.log('23' / '2');
+console.log('23' > '18');
+
+let n = '1' + 1; // '11'
+n = n - 1; // 11 - 1 (- operator converts '11' to number 11)
+console.log(n);
