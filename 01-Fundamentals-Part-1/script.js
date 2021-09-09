@@ -282,7 +282,7 @@ if (hasDriversLicense && hasGoodVision && !isTired) {
 /*
 The Switch Statement
 */
-
+/*
 const day = 'Monday';
 
 switch (day) {
@@ -310,7 +310,7 @@ switch (day) {
 
 }
 
-// if/else-if equivalent 
+// if/else-if equivalent
 if (day === 'Monday') {
     console.log('Plan course structure');
     console.log('Go to coding meetup');
@@ -325,3 +325,23 @@ if (day === 'Monday') {
 } else {
     console.log('Not a valid day!');
 }
+*/
+
+/*
+The Conditional (Ternary) operator
+*/
+
+const age = 15;
+// age >= 18 ? console.log('I like to drink beer 🍺') : console.log('I like to drink water 💧');
+
+const drink = age >= 18 ? 'beer 🍺' : 'water 💧';
+console.log(drink);
+
+let drink2;
+if (age >= 18) {
+    drink2 = 'beer 🍺';
+} else {
+    drink2 = 'water 💧';
+}
+console.log(drink2);
+console.log(`I like to drink ${age >= 18 ? 'beer 🍺' : 'water 💧'}`)
