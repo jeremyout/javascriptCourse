@@ -64,3 +64,20 @@ const portPercentOfWorldPop2 = percentageOfWorld2(10);
 console.log(usPercentOfWorldPop2);
 console.log(finPercentOfWorldPop2);
 console.log(portPercentOfWorldPop2);
+
+/*
+Arrow functgions
+*/
+/*
+1. Recreate the last assignment, but this time create an arrow function called
+'percentageOfWorld3'
+*/
+
+const percentageOfWorld3 = population => (population / 7900) * 100;
+
+const usPercentOfWorldPop3 = percentageOfWorld3(328);
+const finPercentOfWorldPop3 = percentageOfWorld3(6);
+const portPercentOfWorldPop3 = percentageOfWorld3(10);
+console.log(usPercentOfWorldPop3);
+console.log(finPercentOfWorldPop3);
+console.log(portPercentOfWorldPop3);
