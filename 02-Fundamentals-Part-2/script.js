@@ -107,6 +107,7 @@ console.log(fruitProcessor(2, 3));
 /*
 Introduction to Arrays
 */
+/*
 const friend1 = 'Michael';
 const friend2 = 'Steven';
 const friend3 = 'Peter';
@@ -122,7 +123,7 @@ console.log(friends[2]);
 console.log(friends.length);
 console.log(friends[friends.length - 1]);
 
-// Can modify elements of an array despite being declared as const. 
+// Can modify elements of an array despite being declared as const.
 friends[2] = 'Scotty';
 console.log(friends[2]);
 console.log(friends);
@@ -150,3 +151,40 @@ console.log(age1, age2, age3);
 // Rather than doing the above, you can use the function calls within the array initialization
 const ages = [calcAge(years[0]), calcAge(years[1]), calcAge(years[years.length - 1])];
 console.log(ages);
+*/
+
+/*
+Basic Array Operations
+*/
+const friends = ['Michael', 'Steven', 'Peter'];
+// Add elements
+const newLength = friends.push('Jay'); // Adds to the end of the array
+console.log(friends);
+console.log(newLength);
+
+friends.unshift('John'); // Adds to the beginning of the array
+console.log(friends);
+
+// Remove elements
+friends.pop(); // Removes the last element of the array
+const popped = friends.pop();
+console.log(popped);
+console.log(friends);
+
+friends.shift(); // Removes the first element of the array
+console.log(friends);
+
+console.log(friends.indexOf('Steven'));
+console.log(friends.indexOf('Bob')); // Not present, returns -1
+
+// Includes uses strict equality
+friends.push(23);
+console.log(friends.includes('Steven'));
+console.log(friends.includes('Bob'));
+console.log(friends.includes(23));
+console.log(friends.includes('23')); // False because includes is strict
+
+
+if (friends.includes('Steven')) {
+    console.log(`You have a friend named Steven`)
+}
