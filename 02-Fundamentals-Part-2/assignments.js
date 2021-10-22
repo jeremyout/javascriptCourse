@@ -256,3 +256,33 @@ console.log(percentages2);
 console.log(percentages.length, percentages2.length);
 // Array equality connot be checked like this because it is not the same reference
 // console.log(percentages === percentages2);
+
+/*
+Looping backwards and loops in loops
+*/
+/*
+1. Store this array of arrays into a variable called 'listOfNeighbours'
+[['Canada', 'Mexico'], ['Spain'], ['Norway', 'Sweden',
+'Russia']];
+2. Log only the neighbouring countries to the console, one by one, not the entire
+arrays. Log a string like 'Neighbour: Canada' for each country
+3. You will need a loop inside a loop for this. This is actually a bit tricky, so don't
+worry if it's too difficult for you! But you can still try to figure this out anyway 😉
+*/
+
+const listOfNeighbours = [['Canada', 'Mexico'], ['Spain'], ['Norway', 'Sweden', 'Russia']];
+// let innerArray = [];
+
+// Here is my initial solution - it works, but could be more efficient
+// for (let i = 0; i < listOfNeighbours.length; i++) {
+//     innerArray = listOfNeighbours[i];
+//     for (let j = 0; j < innerArray.length; j++) {
+//         console.log(`Neighbor(s) for country ${i + 1}: ${innerArray[j]}`)
+//     }
+// }
+
+for (let i = 0; i < listOfNeighbours.length; i++) {
+    for (let y = 0; y < listOfNeighbours[i].length; y++) {
+        console.log(`Neighbor(s) for country ${i + 1}: ${listOfNeighbours[i][y]}`);
+    }
+}
