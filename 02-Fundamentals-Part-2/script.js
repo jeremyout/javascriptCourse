@@ -239,7 +239,7 @@ console.log(`${jonas.firstName} has ${jonas.friends.length} friends and his best
 /*
 Object Methods
 */
-
+/*
 const jonas = {
     firstName: 'Jonas',
     lastName: 'Schmedtmann',
@@ -279,3 +279,24 @@ console.log(jonas.age);
 // "Jonas is a 46 year old teacher. and he has a/no driver's license"
 
 console.log(jonas.getSummary());
+*/
+
+/*
+Iteration: The for loop
+*/
+
+// console.log('Lifting weights repitition 1 🏋️‍♂️');
+// console.log('Lifting weights repitition 2 🏋️‍♂️');
+// console.log('Lifting weights repitition 3 🏋️‍♂️');
+// console.log('Lifting weights repitition 4 🏋️‍♂️');
+// console.log('Lifting weights repitition 5 🏋️‍♂️');
+// console.log('Lifting weights repitition 6 🏋️‍♂️');
+// console.log('Lifting weights repitition 7 🏋️‍♂️');
+// console.log('Lifting weights repitition 8 🏋️‍♂️');
+// console.log('Lifting weights repitition 9 🏋️‍♂️');
+// console.log('Lifting weights repitition 10 🏋️‍♂️');
+
+// Keeps running while the condition is true
+for (let rep = 1; rep <= 10; rep++) {
+    console.log(`Lifting weights repitition ${rep} 🏋️‍♂️`);
+}
