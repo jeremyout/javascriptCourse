@@ -94,7 +94,7 @@ console.log(z === window.z);
 /*
 The this keyword in practice
 */
-
+/*
 // console.log(this);
 
 const calcAge = function (birthYear) {
@@ -128,3 +128,58 @@ matilda.calcAge();
 
 const f = jonas.calcAge;
 // f(); // 'this' keyword is undefined here, similar to calcAge call on line 104 above
+*/
+
+/*
+Regular functions vs. Arrow functions
+*/
+
+// using var here puts the firstName variable on the global object
+// var firstName = 'Matilda ';
+
+const jonas = {
+  firstName: 'Jonas',
+  year: 1991,
+  calcAge: function () {
+    // console.log(this);
+    console.log(2037 - this.year);
+
+    // solution 1
+    // const self = this; // self or that
+    // const isMillenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    //   // console.log(this.year >= 1981 && this.year <= 1996);
+    // };
+
+    // Solution 2 - doesn't need extra variable to preserve 'this'
+    // inherits this from the parent
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+
+    isMillenial();
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+// 'this' doesn't work with an arrow function
+jonas.greet();
+jonas.calcAge();
+
+// arguments keyword
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 6);
+
+var addArrow = (a, b) => {
+  // console.log(arguments); // won't work in arrow function, only available in normal functions
+  return a + b;
+};
+addArrow(2, 5, 8);
