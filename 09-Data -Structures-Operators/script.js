@@ -39,6 +39,11 @@ const restaurant = {
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
   },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}`
+    );
+  },
 };
 
 /*
@@ -88,11 +93,13 @@ console.log(p, q, r);
 /*
 Object destructuring
 */
+/*
 const { name, openingHours, categories } = restaurant;
 console.log(name);
 console.log(openingHours);
 console.log(categories);
 
+// Rename the parameter from its object name
 const {
   name: restaurantName,
   openingHours: hours,
@@ -134,3 +141,70 @@ restaurant.orderDelivery({
   address: 'Via del sole, 21',
   starterIndex: 1,
 });
+*/
+
+/*
+The spread operator
+*/
+
+const arr = [7, 8, 9];
+const badNewArray = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArray);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+
+// logs the elements of the array individually
+console.log(...newArr);
+// the above line provides the same result as this
+console.log(1, 2, 7, 8, 9);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu);
+
+// The spread operator takes all the elements out of an array
+// without making new variables. Can only use it in places
+// where you would otherwise create new values separated by commas
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join two or more arrays together
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+
+// The spread operator works on all iterables.
+// (arrays, strings, maps or sets)
+// but not objects!
+
+const str = 'Jonas';
+const letters = [...str, ' ', 'S.'];
+console.log(letters);
+console.log(...str);
+// The following is not allowed
+// console.log(`${...str} Schmedtmann`); // error: unexpected token '...'
+
+// Can only use the spread operator when building an array
+// or passing values into a function
+
+// const ingredients = [
+//   prompt("Let's make some pasta, ingredient 1?"),
+//   prompt('Ingredient 2?'),
+//   prompt('Ingredient 3?'),
+// ];
+
+// // Old way
+// restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+// // New way using spread
+// restaurant.orderPasta(...ingredients);
+
+// Since ES2018, the spread operator also works on objects
+// even though objects are not iterables
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+console.log(newRestaurant);
+
+const restaurantCopy = { ...restaurant };
+// Doesn't set the name for the old restaurant like previous examples
+restaurantCopy.name = 'Ristoraunte Roma';
+console.log(restaurantCopy.name);
+console.log(restaurant.name);
