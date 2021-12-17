@@ -217,7 +217,7 @@ console.log(restaurant.name);
 /*
 Rest pattern and parameters
 */
-
+/*
 // 1) Destructuring
 
 // Spread because used on the right side of the equal sign
@@ -257,3 +257,46 @@ add(...x);
 
 restaurant.orderPizza('mushrooms', 'onions', 'olives', 'spinach');
 restaurant.orderPizza('mushrooms');
+*/
+
+/*
+Short circuiting (&& and ||)
+*/
+
+console.log('------ OR ------');
+// Can use ANY data type
+// Can return ANY data type
+// Can short circuit
+// - (If the first value is truthy, it will immediately return)
+console.log(3 || 'Jonas');
+console.log('' || 'Jonas');
+console.log(true || 0);
+console.log(undefined || null);
+
+console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+
+// restaurant.numGuests = 23;
+const guest1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guest1);
+
+const guest2 = restaurant.numGuests || 10;
+console.log(guest2);
+
+console.log('------ AND ------');
+// short circuits with the falsy value
+// If the first value is falsy, it means the entire result will be
+// false anyways so there is no need to look at other operands
+console.log(0 && 'Jonas');
+// Because first value is truthy,
+// evaluation continues and the last value is returned
+console.log(7 && 'Jonas'); // returns Jonas
+
+// short circuits the rest of the evaluation when it reaches null
+console.log('Hello' && 23 && null && 'Jonas');
+
+// Order pizza if the function exists
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+// Alternate way of doing this with short circuiting
+restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
