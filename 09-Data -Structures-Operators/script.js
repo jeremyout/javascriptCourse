@@ -262,7 +262,7 @@ restaurant.orderPizza('mushrooms');
 /*
 Short circuiting (&& and ||)
 */
-
+/*
 console.log('------ OR ------');
 // Can use ANY data type
 // Can return ANY data type
@@ -300,3 +300,16 @@ if (restaurant.orderPizza) {
 }
 // Alternate way of doing this with short circuiting
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+*/
+
+/*
+The Nullish Coalescing Operator (??)
+*/
+restaurant.numGuests = 0;
+const guest = restaurant.numGuests || 10;
+console.log(guest);
+
+// Nullish values: null and undefined (NOT 0 and '')
+// Only nullish values short circuit the operation
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
