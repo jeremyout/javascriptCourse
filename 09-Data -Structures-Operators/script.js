@@ -305,6 +305,7 @@ restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 /*
 The Nullish Coalescing Operator (??)
 */
+/*
 restaurant.numGuests = 0;
 const guest = restaurant.numGuests || 10;
 console.log(guest);
@@ -313,3 +314,48 @@ console.log(guest);
 // Only nullish values short circuit the operation
 const guestCorrect = restaurant.numGuests ?? 10;
 console.log(guestCorrect);
+*/
+
+/*
+Logical assignment operators
+*/
+
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+// OR assignment operator
+// The logical OR assignment (x ||= y) operator only assigns if x is falsy.
+// rest1.numGuests = rest1.numGuests || 10;
+// rest2.numGuests = rest2.numGuests || 10;
+// In this case, if rest1.numGuests = 0, rest1.numGuests will get set to 10
+// rest2.numGuests doesn't exist, so it gets added and set to 10.
+// If rest1.numGuests = 20, it will use that value instead of 10.
+// rest1.numGuests ||= 10;
+// rest2.numGuests ||= 10;
+
+// Nullish coalescing assignment operator (null or undefined)
+// The logical nullish assignment (x ??= y) operator only assigns if x is nullish (null or undefined).
+// In this case, with rest1.numGuests = 0, rest1.numGuests will remain zero
+// but rest2 doesn't have a numGuests property so it adds the property
+// and sets the value to 10
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+//AND assignment operator
+// The logical AND assignment (x &&= y) operator only assigns if x is truthy.
+// rest1.owner = rest1.owner && '<ANONYMOUS>';
+// rest2.owner = rest2.owner && '<ANONYMOUS>';
+// In this case, owner is not part of rest1, so nothing happens
+// but rest2 has an owner property so it gets set to anonymous
+rest1.owner &&= '<ANONYMOUS>';
+rest2.owner &&= '<ANONYMOUS>';
+
+console.log(rest1);
+console.log(rest2);
