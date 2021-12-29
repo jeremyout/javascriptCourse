@@ -6,7 +6,7 @@ const flights =
 
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-const hours = {
+const openingHours = {
   [weekdays[3]]: {
     open: 12,
     close: 22,
@@ -36,7 +36,7 @@ const restaurant = {
   //Pre-ES6 -- needed to specify even if the name is the same
   // openingHours: openingHours,
   //ES6 Enhanced Object literals -- don't need to specify if name is the same
-  hours,
+  openingHours,
 
   // Pre-ES6 -- needed the function to specify methods
   // order: function (starterIndex, mainIndex) {
@@ -402,3 +402,39 @@ Enhanced object literals
 //    (Example -- Don't need to do openingHours: openingHours with ES6)
 // 2. Don't need to use the 'function' keyword when creating methods with ES6
 // 3. You can compute property names
+
+/*
+Optional chaining (?.)
+*/
+
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+// WITH optional chaining
+// If a certain property does not exist then undefined is returned immediately
+console.log(restaurant.openingHours.mon?.open);
+// Without optional chaining will generate an error
+// console.log(restaurant.openingHours.mon.open);
+// Can have multiple optional chainings
+console.log(restaurant.openingHours?.mon?.open);
+
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  if (typeof open === 'number') {
+    console.log(`On ${day}, we open at ${open}`);
+  } else {
+    console.log(`On ${day}, we're ${open}`);
+  }
+}
+
+// Methods - can check if a method exists before using
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+// Arrays
+const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+
+console.log(users[0]?.name ?? 'User array empty');
+console.log(users[1]?.name ?? 'User array empty');
