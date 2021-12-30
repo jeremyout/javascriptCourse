@@ -406,7 +406,7 @@ Enhanced object literals
 /*
 Optional chaining (?.)
 */
-
+/*
 if (restaurant.openingHours && restaurant.openingHours.mon)
   console.log(restaurant.openingHours.mon.open);
 
@@ -438,3 +438,29 @@ const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
 
 console.log(users[0]?.name ?? 'User array empty');
 console.log(users[1]?.name ?? 'User array empty');
+*/
+
+/*
+Looping Objects: Object keys, values, and entries
+*/
+
+// Property NAMES
+const properties = Object.keys(openingHours);
+console.log(properties);
+let openStr = `We are open on ${properties.length} days: `;
+
+for (const day of properties) openStr += `${day}, `;
+console.log(openStr);
+
+// Propert VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+// Entire object
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+// Immediately destrucure the object within the for loop
+for (const [day, { open, close }] of entries) {
+  console.log(`On ${day} we open at ${open} and close at ${close}`);
+}
