@@ -522,7 +522,7 @@ console.log(new Set('jonasschmedtmann').size);
 /*
 Maps: Fundamentals
 */
-
+/*
 // Much more useful than sets
 // A map is a data structure that we can use to map values to keys
 // Data is stored in key value pairs, keys can have any type
@@ -573,3 +573,43 @@ console.log(rest.get(arr));
 // Very useful to use DOM elements as keys
 rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
+*/
+
+/*
+Maps: Iteration
+*/
+
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🎉'],
+  [false, 'Try again'],
+]);
+console.log(question);
+
+// The above is the same array structure that is obtained from calling Object.entries()
+console.log(Object.entries(openingHours));
+// Convert object to map
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// Iteration is possible on Maps because Maps are also iterables. For loop is available for them
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+let answer;
+do {
+  answer = Number(prompt('Your answer'));
+  // console.log(answer);
+  console.log(question.get(answer === question.get('correct')));
+} while (answer !== question.get('correct'));
+
+// Sometimes we need to convert a map back to an array (use the spread operator on the map)
+console.log([...question]);
+// entries, keys, and values are also available
+// console.log(question.entries());
+console.log([...question.keys()]);
+console.log([...question.values()]);
