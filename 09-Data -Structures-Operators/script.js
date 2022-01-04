@@ -469,7 +469,7 @@ for (const [day, { open, close }] of entries) {
 /*
 Sets
 */
-
+/*
 const ordersSet = new Set([
   'Pasta',
   'Pizza',
@@ -517,3 +517,59 @@ console.log(new Set('jonasschmedtmann').size);
 // Conclusion: Sets are not intended to replace arrays at all. Whenever you need
 // to store values in order that might contain duplicates always just use arrays.
 // Also true when you need to manipulate data because arrays have access to a lot of methods
+*/
+
+/*
+Maps: Fundamentals
+*/
+
+// Much more useful than sets
+// A map is a data structure that we can use to map values to keys
+// Data is stored in key value pairs, keys can have any type
+
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+// The set method returns the updated map
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+// Can chain the set method
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'We are closed');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 8;
+// The result of the line below will result in a true or false return
+// true and false are also keys in the map, so it will return the value
+// for the true and false keys
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+// Other methods available with Maps
+console.log(rest.has('categories'));
+rest.delete(2);
+console.log(rest);
+console.log(rest.size);
+// rest.clear();
+// console.log(rest);
+// console.log(rest.size);
+
+// Demonstrating that we can use arrays or objects as Map keys
+rest.set([1, 2], 'Test');
+console.log(rest);
+// Not the same as the key [1,2]. Different objects in the heap
+console.log(rest.get([1, 2]));
+// Can get around this by making an array beforehand and using that array in the set and get
+const arr = [1, 2];
+rest.set(arr, 'Test2');
+console.log(rest.get(arr));
+
+// Very useful to use DOM elements as keys
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
