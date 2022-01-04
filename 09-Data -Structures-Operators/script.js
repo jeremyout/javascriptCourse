@@ -443,7 +443,7 @@ console.log(users[1]?.name ?? 'User array empty');
 /*
 Looping Objects: Object keys, values, and entries
 */
-
+/*
 // Property NAMES
 const properties = Object.keys(openingHours);
 console.log(properties);
@@ -464,3 +464,56 @@ console.log(entries);
 for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}`);
 }
+*/
+
+/*
+Sets
+*/
+
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+// Only shows unique entries, Doesn't show duplicates
+console.log(ordersSet);
+// Just like arrays, sets are iterables
+// Order is irrelevant in a set
+
+// Strings are also iterables (will split the string into individual elements)
+console.log(new Set('Jonas'));
+
+// Methods available within a set
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risotto');
+console.log(ordersSet);
+// ordersSet.clear();
+// console.log(ordersSet);
+
+// In a set, there are no indeces. No way to get values out of a set
+// there is no need to get data out of a set. Just use an array in that case
+
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+// Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+// Get how many different(unique) letters there are in a string
+console.log(new Set('jonasschmedtmann').size);
+
+// Conclusion: Sets are not intended to replace arrays at all. Whenever you need
+// to store values in order that might contain duplicates always just use arrays.
+// Also true when you need to manipulate data because arrays have access to a lot of methods
