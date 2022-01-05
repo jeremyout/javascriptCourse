@@ -578,7 +578,7 @@ console.log(rest);
 /*
 Maps: Iteration
 */
-
+/*
 const question = new Map([
   ['question', 'What is the best programming language in the world?'],
   [1, 'C'],
@@ -613,3 +613,75 @@ console.log([...question]);
 // console.log(question.entries());
 console.log([...question.keys()]);
 console.log([...question.values()]);
+*/
+
+/*
+Summary: Which Data Structure to use?
+*/
+
+// Sources of Data
+// 1. From the program itself: Data written directly in source code (status messages)
+// 2. From the UI: Data input from the user or data written in DOM (Tasks in todo app)
+// 3. From external sources: Data fetched for example from a web API (recipe objects)
+
+// Collections of data -- Stored in data structures
+// 4 built in data structures in javascript
+// Simple list? --> Array or Set
+// Key value pairs? --> Objects or Maps (keys allow us to describe values)
+
+// Data from web APIs typically comes in JSON
+// JSON can easily be converted into javascript objects because it uses the same formatting as
+// javascript objects and arrays
+
+// Other built in javascript data structures
+// - WeakMap
+// - WeakSet
+
+// Non-built in
+// - Stacks
+// - Queues
+// - Linked list
+// - Trees
+// - Hash tables
+
+/*
+Arrays vs Sets and Objects vs. Maps
+*/
+
+// Arrays
+// - Use when you need ordered list of values (might contain duplicates)
+// - Use when you need to manipulate data
+const taskArray = ['Code', 'Eat', 'Code'];
+// ['Code', 'Eat', 'Code']
+
+// Sets
+// - Use when you need to work with unique values
+// - Use when high-performance is really important
+// - Use to remove duplicates
+const taskSet = new Set(['Code', 'Eat', 'Code']);
+// ['Code', 'Eat')
+
+// Objects
+// - More traditional key/value store ("abused objects")
+// - Easier to write and access values with . and []
+// - Use when you need to include functions (methods). Can use the this keyword
+// to access properties of the same object which is impossible with Maps
+// - Use when working with JSON (can convert to map)
+const taskObject = {
+  task: 'Code',
+  date: 'today',
+  repeat: true,
+};
+
+// Maps
+// - Better performance
+// - Keys can have any data type
+// - Easy to iterate
+// - Easy to compute size
+// - Use when you simply need to map keys and values
+// - Use when you need keys that are not strings
+const taskMap = new Map([
+  ['task', 'Code'],
+  ['date', 'today'],
+  [false, 'Start coding!'],
+]);
