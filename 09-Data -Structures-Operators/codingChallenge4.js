@@ -32,24 +32,21 @@ Afterwards, test with your own test data!
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
-let text = document.querySelector('textarea').value;
 const button = document.querySelector('button');
 
 button.addEventListener('click', function () {
-  text = document.querySelector('textarea').value.toLowerCase();
-  const [...variables] = text.split('\n');
-  //   console.log(variables);
-  let callCount = 0;
-  for (const v of variables) {
-    callCount++;
-    convertToCamelCase(v, callCount);
+  const text = document.querySelector('textarea').value.toLowerCase();
+  const variables = text.split('\n');
+  for (const [i, v] of variables.entries()) {
+    convertToCamelCase(v, i);
   }
 });
 
 function convertToCamelCase(variableName, count) {
   const [frontHalf, backHalf] = variableName.trim().split('_');
   console.log(
-    [frontHalf, backHalf[0].toUpperCase(), backHalf.slice(1)].join('') +
-      `${'✅'.repeat(count)}`
+    [frontHalf, backHalf.replace(backHalf[0], backHalf[0].toUpperCase())]
+      .join('')
+      .padEnd(20) + `${'✅'.repeat(count + 1)}`
   );
 }
