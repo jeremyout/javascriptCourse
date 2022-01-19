@@ -659,7 +659,7 @@ const taskArray = ['Code', 'Eat', 'Code'];
 // - Use when high-performance is really important
 // - Use to remove duplicates
 const taskSet = new Set(['Code', 'Eat', 'Code']);
-// ['Code', 'Eat')
+// ['Code', 'Eat']
 
 // Objects
 // - More traditional key/value store ("abused objects")
