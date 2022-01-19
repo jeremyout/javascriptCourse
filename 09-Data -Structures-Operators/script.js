@@ -647,7 +647,7 @@ Summary: Which Data Structure to use?
 /*
 Arrays vs Sets and Objects vs. Maps
 */
-
+/*
 // Arrays
 // - Use when you need ordered list of values (might contain duplicates)
 // - Use when you need to manipulate data
@@ -685,3 +685,62 @@ const taskMap = new Map([
   ['date', 'today'],
   [false, 'Start coding!'],
 ]);
+*/
+
+/*
+Working with Strings - Part 1
+*/
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+// Get individual elements of a string
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+// Get the length of a string
+console.log(airline.length);
+console.log('B737'.length);
+
+// Methods
+console.log(airline.indexOf('r')); // strings are 0 based
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal')); // case sensitive, will return -1 if not found
+
+// Extract parts of a string with the slice method - returns a substring.
+// Does not modify original
+console.log(airline.slice(4)); //Air Portugal
+console.log(airline.slice(4, 7)); //Air
+
+// Extract the first word of airline
+console.log(airline.slice(0, airline.indexOf(' ')));
+// Extract the last word of airline
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+// Can input negative numbers into the slice
+console.log(airline.slice(-2)); // al
+console.log(airline.slice(1, -1));
+
+// Practice - Write a function that checks and airline seat to determine if its the middle seat
+function checkMiddleSeat(seat) {
+  // B and E are the middle seats
+  const s = seat.slice(-1);
+  if (s === 'B' || s === 'E') {
+    console.log('You got the middle seat 😬');
+  } else {
+    console.log('You got lucky 🎉');
+  }
+}
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('16E');
+
+// Whenever you call string methods on primitive strings, javascript converts
+// the string primitive into a string object. This is called Boxing
+console.log(new String('jonas'));
+console.log(typeof new String('jonas'));
+// Once complete, the object then gets converted back into a string primitive
+console.log(typeof new String('jonas').slice(1));
