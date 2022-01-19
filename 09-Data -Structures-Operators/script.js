@@ -744,3 +744,79 @@ console.log(new String('jonas'));
 console.log(typeof new String('jonas'));
 // Once complete, the object then gets converted back into a string primitive
 console.log(typeof new String('jonas').slice(1));
+
+/*
+Working with Strings - Part 2
+*/
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+const passenger = 'jOnAs'; // Fix to be - Jonas
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Practice - Make a function to take any passenger name and correct it
+function fixPassengerName(name) {
+  // convert to lower case
+  const lowercase = name.toLowerCase();
+  return lowercase[0].toUpperCase() + lowercase.slice(1);
+}
+console.log(fixPassengerName('bONNiE'));
+console.log(fixPassengerName('JESSIE'));
+console.log(fixPassengerName('mAddIe'));
+
+// Comparing email
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+// When checking user input, the first step is to convert to lower case
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+// Simpler
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// Replacing parts of strings
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+// Only replaces first occurence
+console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate')); // Does work for me
+
+// create a regular expression (Use / instead of ' and add a 'g' at the end for global)
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Booleans (includes, startsWith, endsWith)
+const newPlane = 'Airbus A320neo';
+console.log(newPlane.includes('A320'));
+console.log(newPlane.includes('Boeing'));
+console.log(newPlane.startsWith('Air'));
+
+// Check if the current plane is part of the new airbus family
+if (newPlane.startsWith('Airbus') && newPlane.endsWith('neo')) {
+  console.log('Part of the new Airbus family');
+}
+
+// Practice
+const checkBaggage = function (items) {
+  // convert to lowercase
+  const baggage = items.toLowerCase();
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage('I have a laptop, some Food, and a pocket Knife');
+checkBaggage('Socks and a camera');
+checkBaggage('I have some snacks and a gun for protection');
