@@ -37,7 +37,7 @@ createBooking('LH123', undefined, 1000);
 /*
 How passing arguments works: Value vs Reference
 */
-
+/*
 const flight = 'LH234'; // primitive type
 const jonas = {
   name: 'Jonas Schmedtmann',
@@ -76,3 +76,53 @@ checkIn(flight, jonas);
 
 // Javascript does not have passing by reference, only passing by value
 // When passing an object, it passes the value of the address in memory
+*/
+
+/*
+First class and high-order functions
+*/
+
+// Javascript treats functions as first class citizens,
+// meaning that functions are simply values
+// Functions are just another type of object
+
+// Since functions are objects/values that means you can
+// - Store functions in variables or properties
+const add = (a, b) => a + b;
+const counter = {
+  value: 23,
+  inc: function () {
+    this.value++;
+  },
+};
+// - Pass functions as arguments to other functions
+const btnClose = document.querySelector('button');
+const greet = () => console.log('Hey Jonas');
+btnClose.addEventListener('click', greet);
+// - Return functions from functions
+// - Call methods on functions
+counter.inc.bind(someOtherObject);
+
+// The fact that JavaScript has first class functions allows us to write
+// higher order functions.
+// Higher order functions:
+// A function that recieves another function as an argument, that returns
+// a new function, or both
+// In this example, addEventListener is a higher order function and
+// greet is a callback function:
+btnClose.addEventListener('click', greet);
+// This is only possible because of first class functions
+
+// example of a function returning another function
+function count() {
+  let counter = 0;
+  return function () {
+    counter++;
+  };
+}
+
+// First class functions are just a feature of the programming language
+// all it means is that functions are values.
+
+// There are such thing as higher order functions which are only possible with first class
+// functions
