@@ -131,7 +131,7 @@ function count() {
 /*
 Functions accepting callback functions
 */
-
+/*
 const oneWord = function (str) {
   return str.replace(/ /g, '').toLowerCase();
 };
@@ -159,3 +159,25 @@ document.body.addEventListener('click', high5);
 
 // JS uses callbacks all the time
 // Callback functions allow us to use abstraction (Hide the detail of code implementation)
+*/
+
+/*
+Functions returning functions
+*/
+
+const greet = function (greeting) {
+  // This works with greeting getting passed into the returned function because of closures
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+// Re-written as arrow function:
+const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
+
+const greeterHey = greet('Hey');
+greeterHey('Jonas');
+greeterHey('Steven');
+// Can also be written as the following:
+greet('Hello')('Jonas');
+// Call the arrow function
+greetArrow('Hi')('Jonas');
