@@ -317,7 +317,7 @@ console.log(addVAT2(23));
 /*
 Immediately Invoked Function Expressions (IIFE)
 */
-
+/*
 // Sometimes in js we need a function that is only executed once and then never again
 // basically a function that disappears after it is called once
 
@@ -344,3 +344,61 @@ runOnce();
 }
 // console.log(isPrivate); // error
 console.log(notPrivate); // works
+*/
+
+/*
+Closures
+*/
+
+const secureBooking = function () {
+  let passengerCount = 0;
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+// A closure makes a function remember all the variables
+// that existed at the functions birthplace
+
+// Any function always has access to the vairable environment
+// of the execution context in which the function was created
+
+// booker was created in the execution context of secureBooking which
+// was previously popped off the stack. Booker inherits the variable
+// environment of secureBooking
+
+// To reiterate:
+// - A function has access to the variable environment of the
+//   execution context in which it was created even after that
+//   execution context is gone
+// - The closure is the variable environment attached to the function, exactly as it was
+//   when the function was created.
+// - Scope chain is preserved through a closure, even when a scope has already been destroyed
+// - Closure has priority over the scope chain. For example, if there was a global variable
+//   called passengerCount set to 10, it would still use the one from the closure.
+
+// Closure summary
+// - A closure is the closed-over variable environment of the execution context in which
+//   a function was created, even after that execution context is gone.
+// - A closure gives a function access to all the variables of its parent function, even
+//   after that parent function has returned. The function keeps a reference to its outer
+//   scoppe, which preserves the scope chain throughout time.
+// - A closure makes sure that a function doesn;t lose connection to variables that existed
+//   at the functions birthplace.
+// - A closure is like a backpack that a function carries around wherever it goes. The
+//   backpack has all the variables that were present in the environment where the function
+//   was created.
+// - We do not have to manually create closures, this is a JavaScript feature that happens
+//   automatically. We can't even access closed-over variables explicitly. A closure is NOT
+//   a tangible JavaScript object.
+
+console.dir(booker);
+
+// Double square brackets in the console represent and internal property that we cannot access
