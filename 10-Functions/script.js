@@ -212,6 +212,14 @@ const eurowings = {
 // Creates a copy of the book method from lufthansa, but is now a function, not a method
 const book = lufthansa.book;
 
+// Could technically just do this too, this section is just to demonstrate the call mmethod
+// const eurowingsJeremy = {
+//   airline: 'EurowingsJeremy',
+//   iataCode: 'EWJ',
+//   bookings: [],
+//   book: lufthansa.book,
+// };
+
 // book(23, 'Sarah Williams'); // Doesn't work as-is because the 'this' keyword is now undefined
 
 // Call Method:
@@ -244,3 +252,63 @@ console.log(swiss);
 // better way to do the exact same thing.. Use the spread operator and the call method
 book.call(swiss, ...flightData);
 console.log(swiss);
+
+// The bind method
+// bind also allows us to manually set the 'this' keyword for any function call
+// The difference is that bind does not immediately call the function, instead it
+// returns a new function where the 'this' keyword is bound
+
+// Use the book function for eurowings all the time:
+const bookEW = book.bind(eurowings);
+bookEW(231, 'Steven Williams');
+
+// Can bind once and then use the new functions
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+// Can also use bind to bind specific parameters
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Jonas Schmedtmann');
+bookEW23('Martha Cooper');
+console.log(eurowings);
+
+// Applying part of the arguments beforehand, like in bookEW23, is a common pattern
+// called partial application
+
+// Bind is also useful with event listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+// lufthansa.buyPlane();
+
+// Doesn't work - In an event handler function, the 'this' keyword always points to the
+// element on which the handler is attached to
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+
+// Instead, use
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = (taxRate, value) => value + value * taxRate;
+console.log(addTax(0.1, 200));
+const addVAT = addTax.bind(null, 0.23); // addVAT = value => value + value * 0.23;
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+// You could argue that addVAT could be done by setting default parameters, but this
+// is creating a more specific function based on a more general function
+
+// Challenge
+const addTax2 = function (taxRate) {
+  return function (value) {
+    return value + value * taxRate;
+  };
+};
+const addVAT2 = addTax2(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
