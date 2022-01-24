@@ -164,7 +164,7 @@ document.body.addEventListener('click', high5);
 /*
 Functions returning functions
 */
-
+/*
 const greet = function (greeting) {
   // This works with greeting getting passed into the returned function because of closures
   return function (name) {
@@ -181,3 +181,66 @@ greeterHey('Steven');
 greet('Hello')('Jonas');
 // Call the arrow function
 greetArrow('Hi')('Jonas');
+*/
+
+/*
+The call and apply methods
+*/
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function() {}, // could do it this way instead
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+lufthansa.book(239, 'Jonas Schmedtmann');
+lufthansa.book(635, 'John Smith');
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+// Creates a copy of the book method from lufthansa, but is now a function, not a method
+const book = lufthansa.book;
+
+// book(23, 'Sarah Williams'); // Doesn't work as-is because the 'this' keyword is now undefined
+
+// Call Method:
+
+// Instead do the following. Using the call method, the first input is what we want the
+// 'this' keyword to be
+book.call(eurowings, 23, 'Sarah Williams');
+console.log(eurowings);
+
+book.call(lufthansa, 239, 'Mary Cooper');
+console.log(lufthansa);
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'Mary Cooper');
+console.log(swiss);
+
+// Apply method:
+// Apply does not receive a list of arguments after the this keyword, it takes an array instead
+
+const flightData = [583, 'George Cooper'];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+// The apply method is not used much anymore in modern js because now we have a
+// better way to do the exact same thing.. Use the spread operator and the call method
+book.call(swiss, ...flightData);
+console.log(swiss);
