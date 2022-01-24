@@ -186,7 +186,7 @@ greetArrow('Hi')('Jonas');
 /*
 The call and apply methods
 */
-
+/*
 const lufthansa = {
   airline: 'Lufthansa',
   iataCode: 'LH',
@@ -312,3 +312,35 @@ const addTax2 = function (taxRate) {
 const addVAT2 = addTax2(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
+*/
+
+/*
+Immediately Invoked Function Expressions (IIFE)
+*/
+
+// Sometimes in js we need a function that is only executed once and then never again
+// basically a function that disappears after it is called once
+
+const runOnce = function () {
+  console.log('This function will never run again');
+};
+runOnce();
+
+// IIFE
+(function () {
+  console.log('This function will never run again');
+  const isPrivate = 23;
+})();
+// Also works for arrow functions
+(() => console.log('This function will ALSO never run again'))();
+
+// Why was this created?
+// Functions create scopes. One scope does not have access to inner scope
+// console.log(isPrivate); // error
+// Variables declared with let or const create their own scope inside a block (Behind the scenes section)
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+// console.log(isPrivate); // error
+console.log(notPrivate); // works
