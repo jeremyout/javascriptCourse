@@ -65,12 +65,6 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
@@ -152,7 +146,7 @@ console.log('jonas'.at(-1));
 /*
 Looping arrays: forEach
 */
-
+/*
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 console.log('---- FOR OF ----');
@@ -202,3 +196,30 @@ movements.forEach(function (mov, i, array) {
 // - You cannot break out of a forEach loop (Can't use break or continue).
 //   forEach will always loop over the whole array
 // - Other than that, it is personal preference
+*/
+
+/*
+forEach with Maps and Sets
+*/
+
+// Map
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+// Set
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+
+currenciesUnique.forEach(function (value, _, set) {
+  console.log(`${_}: ${value}`);
+});
+// Sets don't have keys or indexes, so the second parameter in the callback function
+// just gets set to the first parameter
+// _ in js just means a throwaway variable
