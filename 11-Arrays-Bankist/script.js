@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -127,7 +127,7 @@ console.log(letters.join(' - '));
 /*
 The new at method
 */
-
+/*
 const arr = [23, 11, 64];
 console.log(arr[0]);
 // Can replace the bracket notation above with the new at method:
@@ -147,3 +147,58 @@ console.log(arr.at(-1)); // Negative starts counting from the right
 // The at method also works on strings
 console.log('jonas'.at(0));
 console.log('jonas'.at(-1));
+*/
+
+/*
+Looping arrays: forEach
+*/
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log('---- FOR OF ----');
+// Old way
+for (const movement of movements) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+console.log('---- FOR OF WITH ITERATOR ----');
+// Getting the iterator
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+console.log('---- FOR EACH ----');
+// New
+movements.forEach(function (movement) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+});
+// 0: function(200)
+// 1: function(450)
+// 2: function(-400)
+// ...
+
+console.log('---- FOR EACH WITH ITERATOR ----');
+movements.forEach(function (mov, i, array) {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+});
+
+// When to use forEach and when to use for of:
+// - You cannot break out of a forEach loop (Can't use break or continue).
+//   forEach will always loop over the whole array
+// - Other than that, it is personal preference
