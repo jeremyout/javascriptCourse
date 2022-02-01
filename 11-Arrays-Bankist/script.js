@@ -201,7 +201,7 @@ movements.forEach(function (mov, i, array) {
 /*
 forEach with Maps and Sets
 */
-
+/*
 // Map
 const currencies = new Map([
   ['USD', 'United States dollar'],
@@ -223,3 +223,14 @@ currenciesUnique.forEach(function (value, _, set) {
 // Sets don't have keys or indexes, so the second parameter in the callback function
 // just gets set to the first parameter
 // _ in js just means a throwaway variable
+*/
+
+/*
+Project: 'Bankist' App
+*/
+
+// 4 account objects at the top of the file
+// Each of the account objects get put into the accounts array
+// Why not use a map instead? Pretending that all the data is coming from an API.
+// Data from objects typically comes in the form of Objects
+// Storing the objects in an array is one of the most common ways of organizing data in js applications
