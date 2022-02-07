@@ -61,6 +61,27 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// It's better to pass data to a function than it is to use global data
+const displayMovements = function (movements) {
+  // Clear the current contents of the movements area
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `<div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+    <div class="movements__value">${mov}</div>
+  </div>`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+    // 'beforeend' would basically invert the order of transactions
+  });
+};
+displayMovements(account1.movements);
+
+console.log(containerMovements.innerHTML);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -234,3 +255,9 @@ Project: 'Bankist' App
 // Why not use a map instead? Pretending that all the data is coming from an API.
 // Data from objects typically comes in the form of Objects
 // Storing the objects in an array is one of the most common ways of organizing data in js applications
+
+/*
+Creating DOM elements
+*/
+
+// Work done above with the displayMovements function
