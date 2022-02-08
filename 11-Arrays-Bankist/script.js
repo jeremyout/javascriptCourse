@@ -80,7 +80,7 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
-console.log(containerMovements.innerHTML);
+// console.log(containerMovements.innerHTML);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -261,3 +261,30 @@ Creating DOM elements
 */
 
 // Work done above with the displayMovements function
+
+/*
+Data transformations: Map, filter, reduce
+*/
+
+// The map method is yet another method that we can use to loop over arrays.
+// - Map is similar to the forEach method but Map creates a
+//   brand new array containing the results of applying an operation
+//   on all original elements.
+
+const arr = [3, 1, 4, 3, 2];
+const map1 = arr.map(x => x * 2);
+console.log(arr, map1);
+
+// The filter method is used to filter for elements from the original
+// array that satisfy a certain condition.
+// - Creates a new array containing the elements that pass a specified
+//   test condition
+
+const filter1 = arr.filter(x => x > 2);
+console.log(arr, filter1);
+
+// The reduce method boil all array elements down to a single value
+// (Example: adding all elements together)
+
+const reduce1 = arr.reduce((previous, current) => previous + current);
+console.log(arr, reduce1);
