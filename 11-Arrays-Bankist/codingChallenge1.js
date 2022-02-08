@@ -33,15 +33,25 @@ GOOD LUCK 😀
 */
 
 const checkDogs = function (dogsJulia, dogsKate) {
-  const dogsJuliaCopy = dogsJulia.slice(1, -2);
+  const dogsJuliaCopy = dogsJulia.slice();
+  // He wanted us to use splice instead of slice
+  dogsJuliaCopy.splice(0, 1);
+  dogsJuliaCopy.splice(-2);
   const agesConcat = dogsJuliaCopy.concat(dogsKate);
   //   const agesCombined = [...dogsJuliaCopy, ...dogsKate];
 
-  for (let [i, age] of agesConcat.entries()) {
+  //   for (let [i, age] of agesConcat.entries()) {
+  //     const youngOld =
+  //       age >= 3 ? `an adult, and is ${age} years old` : 'still a puppy 🐶';
+  //     console.log(`Dog number ${i + 1} is ${youngOld}`);
+  //   }
+
+  // Should have used the forEach method instead of the for of loop
+  agesConcat.forEach(function (age, i) {
     const youngOld =
       age >= 3 ? `an adult, and is ${age} years old` : 'still a puppy 🐶';
     console.log(`Dog number ${i + 1} is ${youngOld}`);
-  }
+  });
 };
 checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
