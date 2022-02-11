@@ -99,6 +99,14 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 // console.log(accounts);
 
+const calcAndDisplayBalance = function (movements) {
+  const balance = movements.reduce(function (mov, curr) {
+    return (mov += curr);
+  }, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcAndDisplayBalance(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -348,7 +356,7 @@ Computing usernames
 /*
 The filter method
 */
-
+/*
 const deposits = movements.filter(function (mov) {
   return mov > 0;
 });
@@ -367,3 +375,31 @@ const withdrawals = movements.filter(function (mov) {
   return mov < 0;
 });
 console.log(withdrawals);
+*/
+
+/*
+The reduce method
+*/
+
+console.log(movements);
+
+// acc means accumulator here, like a snowball
+const balance = movements.reduce(function (acc, curr, i, arr) {
+  console.log(i, acc);
+  return acc + curr;
+}, 0);
+// Arrow function implementation
+// const balance = movements.reduce((acc, curr) => acc + curr, 0);
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) {
+  balance2 += mov;
+}
+console.log(balance2);
+
+// Maximum value
+const maxValue = movements.reduce(function (acc, curr) {
+  return acc > curr ? acc : curr;
+}, movements[0]);
+console.log(maxValue);
