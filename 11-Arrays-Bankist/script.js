@@ -82,6 +82,23 @@ displayMovements(account1.movements);
 
 // console.log(containerMovements.innerHTML);
 
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(function (name) {
+        return name[0];
+      })
+      .join('');
+  });
+};
+
+// console.log(accounts); // outputs the accounts array with the username property in each object
+// console.log(JSON.parse(JSON.stringify(accounts))); // outputs the accounts array without the username property in each object
+createUsernames(accounts);
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -293,7 +310,7 @@ console.log(arr, reduce1);
 /*
 The map method
 */
-
+/*
 // The map method does not mutate the original method
 
 const eurToUsd = 1.1;
@@ -320,3 +337,10 @@ const movementsDescriptions = movements.map(function (mov, i) {
   }: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`;
 });
 console.log(movementsDescriptions);
+*/
+
+/*
+Computing usernames
+*/
+
+// Done above
