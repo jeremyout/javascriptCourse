@@ -97,7 +97,7 @@ const createUsernames = function (accs) {
 // console.log(accounts); // outputs the accounts array with the username property in each object
 // console.log(JSON.parse(JSON.stringify(accounts))); // outputs the accounts array without the username property in each object
 createUsernames(accounts);
-console.log(accounts);
+// console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -344,3 +344,26 @@ Computing usernames
 */
 
 // Done above
+
+/*
+The filter method
+*/
+
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(deposits);
+
+// For of implementation to achieve the same result as the filter above
+const depositsFor = [];
+for (const mov of movements) {
+  if (mov > 0) {
+    depositsFor.push(mov);
+  }
+}
+console.log(depositsFor);
+
+const withdrawals = movements.filter(function (mov) {
+  return mov < 0;
+});
+console.log(withdrawals);
