@@ -71,7 +71,7 @@ const displayMovements = function (movements) {
 
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-    <div class="movements__value">${mov}</div>
+    <div class="movements__value">${mov}€</div>
   </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -103,9 +103,32 @@ const calcAndDisplayBalance = function (movements) {
   const balance = movements.reduce(function (mov, curr) {
     return (mov += curr);
   }, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
 calcAndDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov), 0);
+  labelSumOut.textContent = `${out}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * account1.interestRate) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -380,7 +403,7 @@ console.log(withdrawals);
 /*
 The reduce method
 */
-
+/*
 console.log(movements);
 
 // acc means accumulator here, like a snowball
@@ -403,3 +426,36 @@ const maxValue = movements.reduce(function (acc, curr) {
   return acc > curr ? acc : curr;
 }, movements[0]);
 console.log(maxValue);
+*/
+
+/*
+The magic of chaining methods
+*/
+
+const eurToUsd = 1.1;
+console.log(movements);
+
+// Pipeline
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurToUsd;
+  })
+  // .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
+
+// Can run into problems and want to examine the values at each step
+// Use the extra parameters available on the map like shown above
+// to access the array
+
+// We should not overuse chaining. Chaining tons of methods one after the
+// other can cause real performance issues if we have large arrays. Try to
+// compress all the functionality that they do into as little methods as possible.
+// For example, we sometimes create way more map methods than we need where we could
+// just do it all in one map call.
+
+// It is a bad practice in JavaScript to chain methods that mutate the
+// original array. An example of that is the splice and reverse methods.
