@@ -122,7 +122,7 @@ const calcDisplaySummary = function (movements) {
     .filter(mov => mov > 0)
     .map(deposit => (deposit * account1.interestRate) / 100)
     .filter((int, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
@@ -431,7 +431,7 @@ console.log(maxValue);
 /*
 The magic of chaining methods
 */
-
+/*
 const eurToUsd = 1.1;
 console.log(movements);
 
@@ -459,3 +459,33 @@ console.log(totalDepositsUSD);
 
 // It is a bad practice in JavaScript to chain methods that mutate the
 // original array. An example of that is the splice and reverse methods.
+*/
+
+/*
+The find method
+*/
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+// Unlike the filter method, the find method will not return an array with
+// all elements that match. The filter also returns a NEW array.
+
+// The find method only returns the first element that satisfies the
+// specified condition.
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+// For of implementation of the find method
+const accountForOf = function (accs) {
+  for (const acc of accs) {
+    if (acc.owner === 'Jessica Davis') {
+      return acc;
+    }
+  }
+};
+console.log(accountForOf(accounts));
