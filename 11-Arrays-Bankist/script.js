@@ -864,3 +864,70 @@ When we want to loop over an array, we want:
 // - Based on callback:
 //     - forEach()
 //        - Does not create a new array, just loops over it
+
+/*
+Array Methods Practice
+*/
+
+// 1. Calculate how much has been deposited across all accounts
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(bankDepositSum);
+
+// 2. Count how many deposits there have been with at least $1000
+
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+console.log(numDeposits1000);
+
+// Same thing but using the reduce method instead:
+const numDeposits1000p2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, curr) => (curr >= 1000 ? count + 1 : count), 0);
+console.log(numDeposits1000p2);
+
+// Prefixed ++ operator
+let a = 10;
+console.log(a++);
+console.log(a);
+console.log(++a);
+console.log(a);
+
+// 3. More advanced case of the reduce method. Create a new object
+const { deposits, withdrawls } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, curr) => {
+      // curr > 0 ? (sums.deposits += curr) : (sums.withdrawls += curr);
+      sums[curr > 0 ? 'deposits' : 'withdrawls'] += curr;
+      return sums;
+    },
+    { deposits: 0, withdrawls: 0 }
+  );
+
+console.log(deposits, withdrawls);
+
+// 4. Create a function to convert any function into title-case
+// Ex: this is a nice title -> This Is a Nice Title
+
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+  return capitalize(titleCase);
+};
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
+
+// We want and to be capitalized in the final example because it is the first
+// word of the title, so the capitalize function was added to capitalize the
+// first letter of the title regardless of it being an exception.
