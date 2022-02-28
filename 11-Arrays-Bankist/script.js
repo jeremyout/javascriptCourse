@@ -724,7 +724,7 @@ console.log(movements);
 /*
 More ways of creating and filling arrays
 */
-
+/*
 const arr = [1, 2, 3, 4, 5, 6, 7];
 console.log(new Array(1, 2, 3, 4, 5, 6, 7));
 
@@ -772,3 +772,95 @@ labelBalance.addEventListener('click', function () {
   // array once it is spread)
   console.log(movementsUI2);
 });
+*/
+
+/*
+Summary: which array method to use?
+*/
+
+//
+// What do I want from an array?
+//
+// Do I want to mutate the original?
+// Do I want a new array?
+// Do I want an array index?
+// Do I want an array element?
+// Do I want to know if an array includes?
+// Do I want a new string?
+// Do I want to transform to a value?
+// Do I want to loop over the array?
+
+/*
+To mutate the original array, we want:
+*/
+// - To add to the original array:
+//    - push() (end)
+//    - unshift() (start)
+// - To remove from the original array:
+//    - pop() (end)
+//    - shift() (start)
+//    - splice() (any)
+// - Others:
+//    - reverse()
+//    - sort()
+//    - fill()
+
+/*
+To create a new array, we want:
+*/
+// - Computed from original:
+//    - map() (loop)
+//- Filtered using condition:
+//    - filter()
+// - Portion of the original:
+//    - slice()
+// - Adding original to other:
+//    - concat()
+// - Flatterning the original:
+//    - flat()
+//    - flatMap()
+
+/*
+When we need an array index, we want:
+*/
+// - Based on a value:
+//    - indexOf()
+// -Based on a test condition:
+//    - findIndex()
+
+/*
+When we need an array element, we want:
+*/
+// - Based on a test condition:
+//    - find()
+
+/*
+When we want to know if an array includes, we want:
+*/
+// - Based on a value:
+//    - includes()
+// - Based on a test condition:
+//    - some()
+//    - every()
+
+/*
+When we want a new string, we want:
+*/
+// - Based on a separator string:
+//    -join()
+
+/*
+When we want to transform to a value, we want:
+*/
+// - Based on an accumulator:
+//    - reduce()
+//        - (Boil down array to single value of any type: number, string
+//          boolean, or even a new array or object)
+//
+
+/*
+When we want to loop over an array, we want:
+*/
+// - Based on callback:
+//     - forEach()
+//        - Does not create a new array, just loops over it
