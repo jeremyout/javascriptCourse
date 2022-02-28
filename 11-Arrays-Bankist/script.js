@@ -593,7 +593,7 @@ The findIndex method
 /*
 some and every methods
 */
-
+/*
 console.log(movements);
 // .includes only checks for equality
 console.log(movements.includes(-130));
@@ -615,3 +615,49 @@ const deposit = mov => mov > 0;
 console.log(movements.some(deposit));
 console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
+*/
+
+/*
+flat and flatMap
+*/
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat());
+
+// the flat method only goes one level deep as
+// demonstrated with the flat call on arrDeep
+// can take an input to specify depth, default is 1
+
+console.log(arrDeep.flat(2));
+
+// More realistic example, want to display the movement of all accounts
+
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance);
+
+// Can optimize the above functionality with function chaining
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+// Creating a map and then flattening it is pretty common, and that's
+// why the flatMap method exists. flatMap is also better for performance.
+
+// flatMap needs to receive exactly the same input as the map method
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance2);
+
+// flatMap only goes one level deep, so if you need to go deeper than one level
+// you still need to tuse the flat method
