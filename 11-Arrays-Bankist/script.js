@@ -185,6 +185,21 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+    // Update UI
+    updateUI(currentAccount);
+    // Clear the UI
+    inputLoanAmount.value = '';
+    inputLoanAmount.blur();
+  }
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
   if (
@@ -574,3 +589,29 @@ The findIndex method
 */
 
 // Used in the close account feature setion above
+
+/*
+some and every methods
+*/
+
+console.log(movements);
+// .includes only checks for equality
+console.log(movements.includes(-130));
+// same thing using the some method (just for example, use includes for equality)
+console.log(movements.some(mov => mov === -130));
+
+// some method checks for a specific condition
+const anyDeposits = movements.some(mov => mov > 1500);
+console.log(anyDeposits);
+
+// Further changes located above for the loan feature
+
+// every method
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
