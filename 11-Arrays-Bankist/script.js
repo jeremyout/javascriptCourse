@@ -675,7 +675,7 @@ console.log(overallBalance2);
 /*
 Sorting arrays
 */
-
+/*
 // Strings (alphabetical)
 const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
 console.log(owners.sort());
@@ -719,3 +719,56 @@ console.log(movements);
 // if b < a, the result will be a negative number.
 movements.sort((a, b) => b - a);
 console.log(movements);
+*/
+
+/*
+More ways of creating and filling arrays
+*/
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Empty arrays + fill method
+const x = new Array(7);
+console.log(x);
+
+x.fill(1, 3, 5);
+console.log(x);
+x.fill(1);
+console.log(x);
+
+// doesn't have to be done on empty arrays
+arr.fill(23, 2, 6);
+console.log(arr);
+
+// Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+// Don't need the curr param, use '_' to indicate it is a throwaway parameter
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+// Get 100 random rolls of a 6 sided die
+const w = Array.from({ length: 100 }, () =>
+  Math.floor(Math.random() * (6 - 1 + 1) + 1)
+);
+console.log(w);
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsUI);
+
+  // Could also get the movements from the UI by using the spread operator
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')].map(
+    el => Number(el.textContent.replace('€', ''))
+  );
+  // Would still have to do a map though
+  // console.log(movementsUI2.map(el => Number(el.textContent.replace('€', ''))));
+  // Can do the map via function chaining (moved the .map call to the end of the
+  // array once it is spread)
+  console.log(movementsUI2);
+});
