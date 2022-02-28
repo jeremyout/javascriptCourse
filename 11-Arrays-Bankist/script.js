@@ -145,7 +145,7 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-  console.log(currentAccount);
+  // console.log(currentAccount);
   // if we can't find the account (currentAccount === undefined), then the line
   // below will error out because the pin property doesn't exist. We can use
   // optional chaining to correct this
@@ -184,6 +184,30 @@ btnTransfer.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    console.log('verified');
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    // console.log(index);
+    // Delete the account
+    accounts.splice(index, 1);
+    // Hide the UI
+    containerApp.style.opacity = 0;
+    // clear the input fields
+    inputCloseUsername.value = inputClosePin.value = '';
+    inputClosePin.blur();
+  } else {
+    console.log('validation failed, pin provided:', inputClosePin.value);
+  }
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -544,3 +568,9 @@ const accountForOf = function (accs) {
 };
 console.log(accountForOf(accounts));
 */
+
+/*
+The findIndex method
+*/
+
+// Used in the close account feature setion above
