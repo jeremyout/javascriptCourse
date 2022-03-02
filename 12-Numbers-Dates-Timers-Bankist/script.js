@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -223,7 +223,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -251,3 +251,67 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+/*
+Converting and checking numbers
+*/
+
+console.log(23 === 23.0);
+
+// Base 10 -> 0 - 9 // 1/10 = 0.1 // 3/10 = 3.333
+// Binary -> 0 - 1
+console.log(0.1 + 0.2);
+console.log(0.1 + 0.2 === 0.3);
+
+// Can't do really precise scientific or financial calculations in js
+
+// Conversion
+console.log(Number('23'));
+console.log(+'23'); // type coercion - automatically converts to a number
+
+// Parsing
+// tries to get rid of unnecessary symbols that aren't numbers. Especially useful
+// if you get a unit from CSS and need to get rid of the unit
+// Integer
+console.log(Number.parseInt('30px', 10));
+console.log(Number.parseInt('e23 ', 10)); // string needs to start with a number to work
+// parseInt accepts a second argument - radix - base of the numeral system being used
+
+// floats
+console.log(Number.parseFloat('2.5rem'));
+console.log(Number.parseInt('2.5rem')); // Only returns the integer, stops at decimal point
+
+// parseInt and parseFloat are global - don't need the 'Number.' part
+console.log(parseFloat('   2.5rem   ')); // More traditional way
+
+// Now-a-days it is preferred to use the Number object because it
+// provides the Number namespace
+
+// isNaN
+// Checking if value is NaN
+console.log(Number.isNaN(20));
+console.log(Number.isNaN('20'));
+console.log(Number.isNaN(+'20X'));
+console.log(Number.isNaN(23 / 0)); // 23/0 = Infinity
+
+// isNaN is not a perfect way for checking if a value is a number
+
+// there is a better method, isFinite
+// Checking if value is a number
+console.log(Number.isFinite(20));
+console.log(Number.isFinite('20'));
+console.log(Number.isFinite(+'20X'));
+console.log(Number.isFinite(23 / 0)); // 23/0 = Infinity
+
+// isFinite is the ultimate method you should use to determine if
+// a value is a number at least when you are working with floating point
+// numbers.
+
+console.log(Number.isInteger(23));
+console.log(Number.isInteger(23.0));
+console.log(Number.isInteger(23 / 0));
+
+// Summary
+// - isFinite is the go-to for checking if a value is a number
+// - parseFloat is the go-to for reading a value out of a string,
+//   for example coming from CSS
