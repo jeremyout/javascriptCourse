@@ -81,7 +81,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const formatMovementDates = function (date) {
+const formatMovementDates = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
@@ -91,12 +91,13 @@ const formatMovementDates = function (date) {
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
   else {
-    // Get datestamp elements
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    // Set as Month/day/year
-    return `${month}/${day}/${year}`;
+    // // Get datestamp elements
+    // const day = `${date.getDate()}`.padStart(2, 0);
+    // const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    // const year = date.getFullYear();
+    // // Set as Month/day/year
+    // return `${month}/${day}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date);
   }
 };
 
@@ -111,7 +112,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const displayDate = formatMovementDates(date);
+    const displayDate = formatMovementDates(date, acc.locale);
 
     const html = `
       <div class="movements__row">
@@ -185,8 +186,6 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
-//day/month/year
-
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
   e.preventDefault();
@@ -207,20 +206,33 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // Create current date and time
     const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric', // other options: long, 2-digit
+      year: 'numeric',
+      // weekday: 'long',
+    };
+    const locale = navigator.language;
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
-    // Get datestamp elements
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const year = now.getFullYear();
-    const hours =
-      now.getHours() > 12
-        ? `${now.getHours() - 12}`.padStart(2, 0)
-        : `${now.getHours()}`.padStart(2, 0);
-    const minutes = now.getMinutes();
-    const timeOfDay = now.getHours() > 12 ? 'pm' : 'am';
-    // Set as Month/day/year
-    labelDate.textContent = `${month}/${day}/${year}, ${hours}:${minutes} ${timeOfDay}`;
+    // const day = `${now.getDate()}`.padStart(2, 0);
+    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    // const year = now.getFullYear();
+    // const hours =
+    //   now.getHours() > 12
+    //     ? `${now.getHours() - 12}`.padStart(2, 0)
+    //     : `${now.getHours()}`.padStart(2, 0);
+    // const minutes = `${now.getMinutes()}`.padStart(2, 0);
+    // const timeOfDay = now.getHours() > 12 ? 'pm' : 'am';
+    // // Set as Month/day/year
+    // labelDate.textContent = `${month}/${day}/${year}, ${hours}:${minutes} ${timeOfDay}`;
 
     // Update UI
     updateUI(currentAccount);
@@ -632,7 +644,7 @@ Adding Dates to bankist app
 /*
 Operations with dates
 */
-
+/*
 const future = new Date(2037, 10, 19, 15, 23);
 console.log(Number(future));
 
@@ -641,3 +653,4 @@ const calcDaysPassed = (date1, date2) =>
 
 const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 24));
 console.log(days1);
+*/
