@@ -464,7 +464,7 @@ console.log(parseInt('230_000')); // Output: 230
 /*
 Working with BigInt
 */
-
+/*
 console.log(2 ** 53 - 1);
 console.log(Number.MAX_SAFE_INTEGER);
 console.log(2 ** 53 + 1);
@@ -510,3 +510,60 @@ console.log(10 / 3);
 // This new primitive type adds some new capabilities to js
 // In practice you probably won't use it very much but is still good
 // to know it exists and how it works
+*/
+
+/*
+Creating Dates
+*/
+/*
+// Create a date
+// there are 4 ways, all using the same constructor
+const now = new Date();
+console.log(now);
+
+// Parse the date from a date string
+console.log(new Date('Mar 08 2022 11:07:23'));
+console.log(new Date('December 24 2015')); // Not a good idea to do this
+console.log(new Date(account1.movementsDates[0]));
+
+// Pass year, month, day, hour, minute, and secong
+console.log(new Date(2037, 10, 19, 15, 23, 5)); // outputs: Thu Nov 19 2037 15:23:05
+// month in javascript is zero-based
+// Javascript automatically corrects dates
+console.log(new Date(2037, 10, 33));
+
+// Pass the amount of ms since beginning of unix time
+console.log(new Date(0));
+// 3 days after the above example
+console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+// 3 * 24 * 60 * 60 * 1000 is called a timestamp (timestamp of the day #3)
+*/
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear()); // DON'T USE getYear!
+console.log(future.getMonth()); // zero-based
+console.log(future.getDate());
+console.log(future.getDay()); // gets day of week, 0 = Sunday
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+// Get a nicely formatted string
+console.log(future.toISOString());
+// ISO string is useful for converting a date object to a string for storing
+
+// Get the timestamp (milliseconds passed since Jan 1 1970)
+console.log(future.getTime());
+
+console.log(new Date(2142278580000));
+
+// Get timestamp for right npw
+console.log(Date.now());
+
+// There are set versions of all of the above methods
+future.setFullYear(2040);
+console.log(future);
+// there also exists setMonth, setDate, setDay, setHours, ...
+future.setDate(3);
+console.log(future);
