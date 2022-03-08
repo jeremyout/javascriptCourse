@@ -429,7 +429,7 @@ labelBalance.addEventListener('click', function () {
 /*
 Numeric serparators
 */
-
+/*
 // 287,460,000
 const diameter = 287_460_000_000;
 console.log(diameter);
@@ -459,3 +459,54 @@ console.log(Number('230_000')); // Output: NaN
 
 // Same is true  for the parseInt function, everything after underscore is ignored
 console.log(parseInt('230_000')); // Output: 230
+*/
+
+/*
+Working with BigInt
+*/
+
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1);
+console.log(2 ** 53 + 2);
+console.log(2 ** 53 + 3);
+console.log(2 ** 53 + 4);
+
+// Sometimes we need to work with numbers bigger than 9007199254740991
+// For example, database IDs or when interacting with real 60 bit numbers
+
+// Starting with ES2020, a new primitive was added called BigInt
+// can use it to store numbers as large as we want, no matter how big
+
+console.log(489073948798723465902997823423423424n); // use n to use big int
+console.log(BigInt(489073948798723465902997823423423424));
+
+// Operations
+console.log(10000n + 10000n);
+console.log(2034982039846128726487698274n * 10000000n);
+// console.log(Math.sqrt(16n)); // error
+
+// Cannot mix big int with regular numbers
+const huge = 9872385476827978234767242n;
+const num = 23;
+// console.log(huge * num); // error: cannot mix bigint and other types
+// need to convert regular number
+console.log(huge * BigInt(num));
+
+// however there are 2 exceptions to this, which are the comparison operators
+// and the + operator when working with strings
+console.log(20n > 15); // works
+console.log(20n === 20);
+console.log(typeof 20n);
+console.log(20n == 20);
+console.log(20n == '20');
+
+console.log(huge + ' is really big');
+
+// Division
+console.log(10n / 3n); // returns the closest big int
+console.log(10 / 3);
+
+// This new primitive type adds some new capabilities to js
+// In practice you probably won't use it very much but is still good
+// to know it exists and how it works
