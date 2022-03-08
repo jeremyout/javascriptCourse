@@ -393,7 +393,7 @@ console.log(+(2.345).toFixed(2));
 /*
 The remainder operator
 */
-
+/*
 console.log(5 % 2); // 1
 console.log(5 / 2); // 5 = 2*2 + 1
 
@@ -424,3 +424,38 @@ labelBalance.addEventListener('click', function () {
 
 //  Whenever you need to do something every nth time, that is a good use
 // of the remainder
+*/
+
+/*
+Numeric serparators
+*/
+
+// 287,460,000
+const diameter = 287_460_000_000;
+console.log(diameter);
+
+const price = 345_99;
+console.log(price);
+
+// Both of these represent the same value
+const transferFee1 = 15_00;
+const transferFee2 = 1_500;
+
+const PI = 3.14_15; // not really useful
+console.log(PI);
+
+// Cannot place the '_' before decimal, after decimal, or at the end of the number
+// Also cannot place two underscores in a row
+
+// When we try to convert strings that contain underscores to a number,
+// that will not work as expected.
+console.log(Number('230000'));
+console.log(Number('230_000')); // Output: NaN
+
+// If you need to store a number as a string in an API,
+// or get a number from an API, you should not use underscores there
+// because then js will not be able to parse the number correctly
+// out of the string and introduce bugs.
+
+// Same is true  for the parseInt function, everything after underscore is ignored
+console.log(parseInt('230_000')); // Output: 230
