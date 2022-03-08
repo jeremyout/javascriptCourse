@@ -94,7 +94,7 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +104,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out.toFixed(2))}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +126,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -255,7 +255,7 @@ btnSort.addEventListener('click', function (e) {
 /*
 Converting and checking numbers
 */
-
+/*
 console.log(23 === 23.0);
 
 // Base 10 -> 0 - 9 // 1/10 = 0.1 // 3/10 = 3.333
@@ -315,3 +315,76 @@ console.log(Number.isInteger(23 / 0));
 // - isFinite is the go-to for checking if a value is a number
 // - parseFloat is the go-to for reading a value out of a string,
 //   for example coming from CSS
+*/
+
+/*
+Math and rounding
+*/
+
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2)); // same result as sqrt
+console.log(8 ** (1 / 3)); // calculate a cubic root
+
+// get the maximum value
+console.log(Math.max(5, 18, 23, 11, 2));
+// (does type coercion)
+console.log(Math.max(5, 18, '23', 11, 2));
+// (does not parse)
+console.log(Math.max(5, 18, '23px', 11, 2)); // output: NaN
+
+// get the minimum value
+console.log(Math.min(5, 18, 23, 11, 2));
+
+// constants
+console.log(Math.PI);
+// calculate the area of a circle (10px is radius)
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+
+console.log(Math.trunc(Math.random() * 6) + 1);
+
+const randomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+// Math.random() gives a value between 0...1
+// In this example, we will get a value between 0...(max-min)
+// If we add 1(min value), we get a number between min...(max-min+min)
+// min...(max-min+min) simplifies to min...max
+console.log(randomInt(10, 20));
+
+// Rounding integers
+console.log(Math.trunc(23.3)); // Output: 23
+
+console.log(Math.round(23.3)); // Output: 23
+console.log(Math.round(23.9)); // Output: 24
+
+console.log(Math.ceil(23.3)); // Output: 24
+console.log(Math.round(23.9)); // Output: 24
+
+console.log(Math.floor(23.3)); // Output: 23
+console.log(Math.floor(23.9)); // Output: 23
+
+// all of these methods also do type coercion
+console.log(Math.trunc('23.9'));
+console.log(Math.round('23.3'));
+console.log(Math.ceil('23.3'));
+console.log(Math.floor('23.8'));
+
+// floor an trunc are both basically the same thing when dealing
+// with positive numbers. Negative numbers
+console.log(Math.trunc(-23.3)); // Output: -23
+console.log(Math.floor(-23.3)); // Output: -24
+
+// Rounding decimals (floats)
+console.log((2.7).toFixed(0));
+console.log((2.7).toFixed(3));
+console.log((2.345).toFixed(2));
+// If we want to get a number instead of a sting, add a +
+console.log(+(2.345).toFixed(2));
+
+// The parentheses around the 2.7 in `(2.7).toFixed(0)` works similar to
+// string methods. 2.7 is a primitive and primitives don't have methods.
+// Behind the scenes, js performs boxing. Boxing transforms the 2.7 into
+// a number object, calls the method, once finished it is converted back to
+// a primitive.
