@@ -320,7 +320,7 @@ console.log(Number.isInteger(23 / 0));
 /*
 Math and rounding
 */
-
+/*
 console.log(Math.sqrt(25));
 console.log(25 ** (1 / 2)); // same result as sqrt
 console.log(8 ** (1 / 3)); // calculate a cubic root
@@ -388,3 +388,39 @@ console.log(+(2.345).toFixed(2));
 // Behind the scenes, js performs boxing. Boxing transforms the 2.7 into
 // a number object, calls the method, once finished it is converted back to
 // a primitive.
+*/
+
+/*
+The remainder operator
+*/
+
+console.log(5 % 2); // 1
+console.log(5 / 2); // 5 = 2*2 + 1
+
+console.log(8 % 3); // 2
+console.log(8 / 3); // 8 = 2*3 + 2
+
+// Checking for an even number
+console.log(6 % 2);
+console.log(6 / 2);
+
+// Odd number
+console.log(7 % 2);
+console.log(7 / 2);
+
+const isEven = num => num % 2 === 0;
+console.log(isEven(8));
+console.log(isEven(23));
+console.log(isEven(514));
+
+labelBalance.addEventListener('click', function () {
+  [...document.querySelectorAll('.movements__row ')].forEach(function (row, i) {
+    //0, 2, 4, 6,... (every second time)
+    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+    // 0, 3, 6, 9,... (every third time)
+    if (i % 3 === 0) row.style.backgroundColor = 'blue';
+  });
+});
+
+//  Whenever you need to do something every nth time, that is a good use
+// of the remainder
