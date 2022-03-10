@@ -188,14 +188,33 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogoutTimer = function () {
+  const tick = function () {
+    const minutes = String(Math.trunc(time / 60)).padStart(2, 0);
+    const seconds = String(time % 60).padStart(2, 0);
+    // In each call, print the remaining time to the UI
+    labelTimer.textContent = `${minutes}:${seconds}`;
+
+    // When the time is at 0, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      // Display UI and message
+      labelWelcome.textContent = `Log in to get started`;
+      containerApp.style.opacity = 0;
+    }
+    // Decrease timer by 1 second
+    time--;
+  };
+  // Set the time to 5 minutes
+  let time = 120;
+  // Call the timer every second
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
-
-// FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+let currentAccount, timer;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -245,6 +264,10 @@ btnLogin.addEventListener('click', function (e) {
     // // Set as Month/day/year
     // labelDate.textContent = `${month}/${day}/${year}, ${hours}:${minutes} ${timeOfDay}`;
 
+    // Start logout timer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -274,6 +297,9 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+    // Reset timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -292,6 +318,10 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(currentAccount);
+
+      // Reset timer
+      clearInterval(timer);
+      timer = startLogoutTimer();
     }, 2500);
   }
   inputLoanAmount.value = '';
@@ -691,7 +721,7 @@ console.log(
 /*
 Timers: setTimeout and setInterval
 */
-
+/*
 // Can use setTimeout to execute some code at some point in the future
 // callback function is only executed once
 const ingredients = ['pepperoni', 'spinach'];
@@ -730,3 +760,8 @@ setInterval(function () {
 
   console.log(time);
 }, 1000);
+*/
+
+/*
+Implementing a countdown timer
+*/
