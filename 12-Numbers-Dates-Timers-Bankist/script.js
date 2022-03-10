@@ -283,14 +283,16 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -669,7 +671,7 @@ console.log(days1);
 /*
 Internationalizing Numbers (Intl)
 */
-
+/*
 const num = 876782.23;
 const options = {
   style: 'currency', // also tried percent and unit
@@ -684,3 +686,47 @@ console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language, options).format(num)
 );
+*/
+
+/*
+Timers: setTimeout and setInterval
+*/
+
+// Can use setTimeout to execute some code at some point in the future
+// callback function is only executed once
+const ingredients = ['pepperoni', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) =>
+    console.log(`Here is your pizza with ${ing1} and ${ing2}! 🍕`),
+  3000,
+  ...ingredients
+);
+console.log('Waiting');
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+// setInterval
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);
+
+// Log a real clock to the console
+setInterval(function () {
+  const now = new Date();
+
+  // Clock from dividing the full date into spearate parts
+  // const hours = `${now.getHours()}`.padStart(2, 0);
+  // const minutes = `${now.getMinutes()}`.padStart(2, 0);
+  // const seconds = `${now.getSeconds()}`.padStart(2, 0);
+  // console.log(`${hours}:${minutes}:${seconds}`);
+
+  // Clock using the Intl API
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  };
+  const time = new Intl.DateTimeFormat('en-US', options).format(now);
+
+  console.log(time);
+}, 1000);
