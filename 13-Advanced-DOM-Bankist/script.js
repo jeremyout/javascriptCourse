@@ -29,3 +29,20 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+/*
+How the DOM really works
+*/
+
+// Allows us to make JavaScript interact with the browser
+
+// We can write JavaScript to create, modify, and delete HTML
+// Elements, set styles, classes and attributes; and listen
+// and respond to events
+
+// DOM tree is created from an HTML document, which we can then
+// interact with. DOM tree is a tree-like structure made out
+// of nodes
+
+// DOM is a very complex API that contains lots of methods and
+// properties to interact with the DOM tree.
