@@ -46,3 +46,63 @@ How the DOM really works
 
 // DOM is a very complex API that contains lots of methods and
 // properties to interact with the DOM tree.
+
+/*
+Selecting, creating, and deleting elements
+*/
+
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+console.log(allSections);
+
+document.getElementById('section--1');
+// Returns an HTML collection that updates automatically
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons);
+
+// node list does not update automatically
+
+// will also return a live HTML collection
+const allBtnClass = document.getElementsByClassName('btn');
+console.log(allBtnClass);
+
+// Creating and inserting elements
+// . insertAdjacentHTML;
+
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+// message.textContent = 'We use cookies for improved functionality and analytics';
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+// header.prepend(message);
+header.append(message);
+// this only shows the message once on the page.
+// The append just moves the dom element.
+// DOM elements are unique, there can only be one one.
+
+// This will allow adding multiple copies of the same node
+// header.append(message.cloneNode(true));
+
+// header.before(message);
+// header.after(message);
+
+// Delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    // message.remove();
+    message.parentElement.removeChild(message);
+  });
+
+// The remove method is very recent. Before it, we had to remove
+// child elements and so we had to select the parent first and
+// then remove the child from there. Like this:
+// message.parentElement.removeChild(message);
+
+// moving up and down in the DOM tree is called DOM traversing
+
+// Review the insertAdjacentHTML that we used before in the bakist app
