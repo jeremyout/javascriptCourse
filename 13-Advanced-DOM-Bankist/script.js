@@ -50,7 +50,7 @@ How the DOM really works
 /*
 Selecting, creating, and deleting elements
 */
-
+/*
 console.log(document.documentElement);
 console.log(document.head);
 console.log(document.body);
@@ -106,11 +106,12 @@ document
 // moving up and down in the DOM tree is called DOM traversing
 
 // Review the insertAdjacentHTML that we used before in the bakist app
+*/
 
 /*
 Styles, attributes, and classes
 */
-
+/*
 // Styles
 message.style.backgroundColor = '#37383d';
 message.style.width = '120%';
@@ -165,4 +166,45 @@ logo.classList.contains('c'); // not includes like it is in arrays
 // Can use className to set the class, but shouldn't
 // DON'T USE THIS! - WILL OVERRIDE ALL THE CLASSES AND
 // ONLY ALLOWS US TO PUT ONE CLASS ON THE ELEMENT
-logo.className = 'jonas';
+// logo.className = 'jonas';
+*/
+
+/*
+Implementing smooth scrolling
+*/
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+  // console.log(e.target.getBoundingClientRect());
+  // console.log('Current scroll: ', window.scrollX, window.scrollY);
+  // console.log(
+  //   'Height/Width of viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
+
+  // Scroll to section 1 - only works if at top of the page
+  // window.scrollTo(s1coords.left, s1coords.top);
+
+  // Accounts for the current scroll position
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   s1coords.top + window.scrollY
+  // );
+
+  // Implements smooth scrolling
+  // THIS IS THE OLD SCHOOL WAY OF DOING IT:
+  // Need to specify left, top, and behavior properties
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  // More modern way of smooth scrolling to a section:
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
