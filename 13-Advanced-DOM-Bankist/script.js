@@ -1,12 +1,21 @@
 'use strict';
 
 ///////////////////////////////////////
-// Modal window
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+/* 
+Application specific
+*/
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -29,6 +38,80 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////
+// Button scrolling
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+  // console.log(e.target.getBoundingClientRect());
+  // console.log('Current scroll: ', window.scrollX, window.scrollY);
+  // console.log(
+  //   'Height/Width of viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
+
+  // Scroll to section 1 - only works if at top of the page
+  // window.scrollTo(s1coords.left, s1coords.top);
+
+  // Accounts for the current scroll position
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   s1coords.top + window.scrollY
+  // );
+
+  // Implements smooth scrolling
+  // THIS IS THE OLD SCHOOL WAY OF DOING IT:
+  // Need to specify left, top, and behavior properties
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  // More modern way of smooth scrolling to a section:
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+///////////////////////////////////////
+// Page navigation
+
+// This is one way to handle scrolling to a specific section, but is inefficient. It works fine
+// for 3 links, but is really inefficient to keep creating the same callback function
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href'); // don't want the absolute URL, we want relative
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// We can use bubbling up and the event.target property and place a single event listener on the parent container
+// This is known as event delegation
+
+// 1. First, add the event listener to a common parent element of all the elements we're interested in
+// 2. Determine what element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href'); // don't want the absolute URL, we want relative
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+
+/*
+Lectures and experimenting
+*/
 
 /*
 How the DOM really works
@@ -172,7 +255,7 @@ logo.classList.contains('c'); // not includes like it is in arrays
 /*
 Implementing smooth scrolling
 */
-
+/*
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
@@ -208,6 +291,7 @@ btnScrollTo.addEventListener('click', function (e) {
   // More modern way of smooth scrolling to a section:
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+*/
 
 /*
 Types of events and event handlers
@@ -271,7 +355,7 @@ Event propogation: Bubbling and Capturing
 /*
 Event propogation in practice
 */
-
+/*
 // rgb(255,255,255)
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
@@ -314,3 +398,10 @@ document.querySelector('.nav').addEventListener('click', function (e) {
 
 // If we do want to catch events during the capture phase we can define a third parameter in the addEventListener function
 // true or false in the addEventListener call. Replaces bubbling with capturing (see modification to '.nav' above)
+*/
+
+/*
+Event delegation: Implementing page navigation
+*/
+
+// Modifications all made above
