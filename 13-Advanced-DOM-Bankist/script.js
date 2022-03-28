@@ -105,6 +105,29 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 ///////////////////////////////////////
+// Tabbed content
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const clicked = e.target.closest('.operations__tab');
+  if (!clicked) return;
+  // Clear the active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Set the active tab for the tab that was just clicked
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
+///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -409,7 +432,7 @@ Event delegation: Implementing page navigation
 /*
 DOM Traversing
 */
-
+/*
 const h1 = document.querySelector('h1');
 
 ///////////////////////////////////////
@@ -454,3 +477,10 @@ console.log(h1.parentElement.children);
 [...h1.parentElement.children].forEach(function (el) {
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
+*/
+
+/*
+Building a tabbed component
+*/
+
+// All work done up above
