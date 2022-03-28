@@ -267,3 +267,50 @@ Event propogation: Bubbling and Capturing
 // However we can setup events to fire in the capturing phase as well
 // Not all types of events have a capturing and bubbling phase, but most do.
 // Events propogate from one place to another (capturing and bubbling)
+
+/*
+Event propogation in practice
+*/
+
+// rgb(255,255,255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// console.log(randomColor());
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  // In an event handler, 'this' always points to the element on which that event handler is attached
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  // current target is equal to the 'this' keyword in any event handler
+  console.log(e.currentTarget === this);
+  // Stop propogation - stops bubbling (NOT A GOOD IDEA TO USE, just demonstration that it exists)
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.target, e.currentTarget);
+});
+
+// Setup the event listener to trigger in the capturing phase (third input to the addEventListener method)
+// document.querySelector('.nav').addEventListener(
+//   'click',
+//   function (e) {
+//     this.style.backgroundColor = randomColor();
+//     console.log('NAV', e.target, e.currentTarget);
+//   },
+//   true
+// );
+
+// The capturing phase is usually irrelevant for us. On the other hand, the bubbling phase can be very useful
+// for something called event delegation (next lecture)
+
+// If we do want to catch events during the capture phase we can define a third parameter in the addEventListener function
+// true or false in the addEventListener call. Replaces bubbling with capturing (see modification to '.nav' above)
