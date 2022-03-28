@@ -405,3 +405,52 @@ Event delegation: Implementing page navigation
 */
 
 // Modifications all made above
+
+/*
+DOM Traversing
+*/
+
+const h1 = document.querySelector('h1');
+
+///////////////////////////////////////
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+// Both highlight classes are direct children of H1, but this would go as far down as needed in the DOM tree
+// to find more children of the H1 class
+
+console.log(h1.childNodes); // Not that used
+console.log(h1.children); // only works for direct children
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+///////////////////////////////////////
+// Going upwards: Selecting parents
+// Direct parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// Most of the time we need to find a parent element which is not a direct parent
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// We can think of closest being the opposite of querySelector
+// Both receive a query string as an input but querySelector finds children no matter how deep
+// while the closest method finds parent, no matter how far in the DOM tree
+
+///////////////////////////////////////
+// Going sideways: Selecting siblings
+
+// for some reason, in JS we can only select direct siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+// We also have the same methods/properties for nodes (mostly work with the above Element variants anyways)
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+// if we need all the siblings, move up to the parent element and read all the children from there
+console.log(h1.parentElement.children);
+// Change some style to all the siblings but except the original element itself
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
