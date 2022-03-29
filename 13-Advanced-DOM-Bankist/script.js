@@ -190,14 +190,49 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 ///////////////////////////////////////
 // Sticky Navigation
 
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
 
-// The scroll event is not really efficient and should be avoided
-window.addEventListener('scroll', function (e) {
-  console.log(this.window.scrollY);
-  if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
+// // The scroll event is not really efficient and should be avoided
+// window.addEventListener('scroll', function (e) {
+//   // console.log(this.window.scrollY);
+//   if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
+// });
+
+///////////////////////////////////////
+// Sticky Navigation: Intersection Observer API
+
+// const observerCallback = function (entries, observer) {
+//   // In this case, we're only interested in the entries (array of threshold entries)
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+// const observerOptions = {
+//   root: null,
+//   threshold: [0, 0.2], // can have multiple thresholds (array)
+// };
+
+// // Callback function will get called each time the observed element(section1) is
+// // intersecting the root element(null looks at the viewport) at the defined threshold(10%)
+
+// const observer = new IntersectionObserver(observerCallback, observerOptions);
+// observer.observe(section1);
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  // console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+headerObserver.observe(header);
 
 ///////////////////////////////////////
 ///////////////////////////////////////
