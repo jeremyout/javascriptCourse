@@ -768,3 +768,70 @@ window.addEventListener('load', function (e) {
 //   e.returnValue = '';
 // });
 // Don't use this, only prompt user if they are in the middle of a form or in danger of losing data
+
+/*
+Efficient Script Loading: defer and async
+*/
+
+// Regular
+// <script src="script.js"></script>;
+
+// If in head: (Inefficient, don't put script tag in head)
+// Parsing HTML
+// Waiting...
+// Fetch script
+// Execute
+// ...Done Waiting
+// Finish parsing HTML
+
+// If at end of body:
+// Parse HTML
+// Fetch script
+// Execute
+
+// Async
+// <script async src="script.js"></script>;
+
+// If in head: (Shorter page loading time)
+// Parsing HTML
+// Fetch script
+// Waiting...
+// Execute
+// ...Done Waiting
+// Finish parsing HTML
+
+// If at end of body:
+// Makes no sense
+
+// Defer
+// <script defer src="script.js"></script>;
+
+// If in head:
+// Parsing HTML
+// Fetch script
+// Execute
+// Finish parsing HTML
+
+// If at end of body:
+// Makes no sense
+
+// Regular vs Async vs Defer
+
+// End of body
+// - Scripts are fetched and executed after the HTML is completely parsed
+
+// Async in the Head
+// - Scripts are fetched asynchronously and executed immediately
+// - DOMContentLoaded waits for all scripts to execute, but async scripts are an exception. DOMContentLoaded doesn't wait for async
+// - Scripts not guaranteed to execute in order
+// - Use for 3rd party scripts where order doesn't matter (Ex: Google Analytics)
+
+// Defer in the Head (Overall the best solution - Use it where order of execution is important)
+// - Scripts are fetched asnchronously and executed after the HTML is completely parsed
+// - DOMContentLoaded event fires after defer script is executed
+// - Scripts are executed in order that they are declared in the code (usually what we want)
+// - This is the overall best solution! Use for your own scripts and when order matters (Ex: including a library)
+
+// You can of course use different strategies for different scripts
+// Important to note: Only modern browsers support async and defer
+// If you need to support old browsers, you need to put your script tag at the end of the body
