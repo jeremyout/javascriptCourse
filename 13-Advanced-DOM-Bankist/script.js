@@ -737,3 +737,34 @@ Passing Arguments to Event Handlers
 */
 
 // All work done above
+
+/*
+Lifecycle DOM events
+*/
+
+// DOM Content loaded
+// - Fired by the document as soon as the HTML is completely parsed, meaning the HTML has been
+// downloaded and converted to the DOM tree. Also all scripts must be downloaded and executed before the DOM
+// Content Loaded event can fire
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+});
+// Should we wrap our entire code into an event like this? No
+// This is why we put the script tag at the end of the body
+
+// document.ready -- jQuery Equivalent to the DOMContentLoaded from vanilla js
+
+// Load event
+// - Fired by the window as soon as not only the HTML is parsed, but also images and CSS files
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+// Created immediately before a user is about to leave a page
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault(); // not necessary in chrome, but is in some browsers
+//   console.log(e);
+//   e.returnValue = '';
+// });
+// Don't use this, only prompt user if they are in the middle of a form or in danger of losing data
