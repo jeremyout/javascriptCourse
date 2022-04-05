@@ -63,3 +63,30 @@ What is Object Oriented Programming?
 // Polymorphism
 // - A child class can ovewrwrite a method it inherited from a parent class.
 // [It's more complex than that, but enough for our purposes now]
+
+/*
+OOP in JavaScript
+*/
+
+// Classical OOP: Classes
+// - Objects (instances) are instantiated from a class which functions like a blueprint
+// - Behavior(methods) is copied from class to all instances
+
+// OOP in JS: Prototypes
+// - Objects are linked to a prototype object
+// - Prototypal inheritance/Delegation: The prototype contains methods (behavior) that are accessible
+//   to all object linked to that prototype (different from class inheritance)
+// - Behavior is delegated to the linked prototype object
+
+// How do we implement OOP in JS
+// - Constructor functions
+// Technique to create objects from a function
+// This is how built-in objects like Arrays, Maps, or Sets are actually implemented
+// - ES6 Classes
+// Modern alternative to constructor function syntax
+// "Syntactic sugar": Behind the scenes, ES6 classes work exactly like constructor functions
+// ES6 classes do not behave like classes in "classical OOP" (last lecture)
+// - Object.create()
+// Easiest and most straightforward way of linking an object to a prototype object
+
+// Note: The 4 pillars of OOP are still valid and improtant with prototypal inheritance
