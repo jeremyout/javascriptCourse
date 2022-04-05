@@ -90,3 +90,40 @@ OOP in JavaScript
 // Easiest and most straightforward way of linking an object to a prototype object
 
 // Note: The 4 pillars of OOP are still valid and improtant with prototypal inheritance
+
+/*
+Constructor functions and the new Operator
+*/
+
+// Constructor functions always start with a capital letter
+// Arrow function will not work as a function constructor (no this keyword).
+//    Only function delcarations and function expressions
+const Person = function (firstName, birthYear) {
+  // Instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  // NEVER create a method inside of a constructor function!!
+  //   this.calcAge = function () {
+  //     console.log(2037 - this.birthYear);
+  //   };
+};
+
+const jonas = new Person('Jonas', 1991);
+console.log(jonas);
+
+// 1. New{} is created
+// 2. function is called, this keyword = {}
+// 3. {} linked to prototype
+// 4. function automatically returns {}
+
+const matilda = new Person('Matilda', 2017);
+console.log(matilda);
+const jack = new Person('Jack', 1975);
+console.log(jack);
+
+// Jonas, Matilda, and Jack are all instances of a Person
+console.log(jonas instanceof Person); // true
+
+// Note: Function constructors are not really a feature of the javascript language
+// Instead they are simply a pattern that has been developed by other developers
