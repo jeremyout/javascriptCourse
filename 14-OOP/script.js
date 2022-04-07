@@ -186,3 +186,42 @@ Prototypal Inheritance and The Prototype Chain
 // - hasOwnProperty cannot be found on Person.prototype, so it looks to it's prototype
 // - Finally, hasOwnProperty is found in the Object.prototype.
 // Object.prototype's prototype is null
+
+/*
+Prototypal Inheritance on Built-In Objects
+*/
+
+console.log(Object.getPrototypeOf(jonas));
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(jonas))); // Top of the protoype chain (Object.prototype)
+console.log(
+  Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(jonas)))
+); // null because trying to get the prototype of Object.prototype
+
+console.dir(Person.prototype.constructor);
+
+const arr = [3, 6, 6, 5, 6, 9, 9]; // new Array === []
+console.log(Object.getPrototypeOf(arr));
+console.log(Object.getPrototypeOf(arr) === Array.prototype);
+
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(arr)));
+console.log(
+  Object.getPrototypeOf(Object.getPrototypeOf(arr)) === Object.prototype
+);
+
+// Add a new method to the prototype property of the Array constructor
+// Now all arrays inherit this method
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+console.log(arr.unique());
+
+// however, what we just did here (extending the prototype of a built-in object)
+// is generally not a good idea
+// Future versions of JS might implement a method of the same name and that would then
+// be used instead of your own method
+
+// Second reason - If you work on a team with multiple developers, this is going to be a bad
+// idea. If multiple developers create the same method with a different name it will create more bugs
+
+const h1 = document.querySelector('h1');
+console.dir(x => x + 1);
