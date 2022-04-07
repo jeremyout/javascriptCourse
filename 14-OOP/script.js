@@ -173,3 +173,16 @@ console.log(jonas, jonas.species);
 // not including inherited properties
 console.log(jonas.hasOwnProperty('firstName'));
 console.log(jonas.hasOwnProperty('species'));
+
+/*
+Prototypal Inheritance and The Prototype Chain
+*/
+
+// Video has diagrams
+
+// Prototype chain works kind of like the scope chain
+// Using 'jonas.hasOwnProperty('firstName')' as an example:
+// - hasOwnProperty cannot be found on the jonas object, so it looks to it's prototype
+// - hasOwnProperty cannot be found on Person.prototype, so it looks to it's prototype
+// - Finally, hasOwnProperty is found in the Object.prototype.
+// Object.prototype's prototype is null
