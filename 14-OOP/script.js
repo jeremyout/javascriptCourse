@@ -127,3 +127,49 @@ console.log(jonas instanceof Person); // true
 
 // Note: Function constructors are not really a feature of the javascript language
 // Instead they are simply a pattern that has been developed by other developers
+
+/*
+Prototypes
+*/
+
+console.log(Person.prototype);
+
+// This is what should be done instead of adding it directly to the object like in
+// the person object above that is commented out. Now there is only one copy of this
+// function, but all of the objects that are created with the constructor function can
+// reuse this function on themselves. The this keyword on each of them is set to the
+// object that is calling the method (jonas, matilda, etc.)
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+// calcAge is not technically part of the object itself but we have
+// access to it because of prototypal inheritance
+jonas.calcAge();
+matilda.calcAge();
+jack.calcAge();
+
+// How does this work?
+// This works because any object always has access to the methods and properties
+// from its prototype. The prototype of jonas, matilda, and jack is Person.prototype
+// We can confirm this because each object has a special property called __proto__
+console.log(jonas.__proto__); // DEPRECATED, no longer recommended
+console.log(Object.getPrototypeOf(jonas)); // replaced __proto__
+// The prototype of the jonas object is essentially the prototype property of the
+// constructor function
+console.log(jonas.__proto__ === Person.prototype);
+// Person.prototype is not the prototype of Person but it is the prototype
+// of all the objects that are created with the Person constructor function
+// Other built-in methods we can use to prove this:
+console.log(Person.prototype.isPrototypeOf(jonas));
+console.log(Person.prototype.isPrototypeOf(matilda));
+console.log(Person.prototype.isPrototypeOf(Person)); // False!
+
+// Can also set properties on the prototype
+Person.prototype.species = 'Homo Sapiens';
+console.log(jonas, jonas.species);
+
+// Owned properties are only the ones that are declared directly on the object itself,
+// not including inherited properties
+console.log(jonas.hasOwnProperty('firstName'));
+console.log(jonas.hasOwnProperty('species'));
