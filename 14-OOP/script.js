@@ -346,3 +346,48 @@ Static methods
 
 // These static methods are not available on the instances and sometimes they are useful to
 // implement a helper function about a class or abotu a constructor function
+
+/*
+Object.create
+*/
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  // This has nothing to do with any constructor function because we're not using the 'new' operator
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+// This works, but is weird, and goes against the spirit of creating objects programmatically
+steven.name = 'Steven';
+steven.birthYear = 2002;
+//
+steven.calcAge();
+
+// Diagram in the lecture video
+
+// With Object.create, we can set the prototype of Objects manually to any object we want
+// In this case, we manually set the prototype of the steven object to the PersonProto object
+// They are now linked through the [[Prototype]] property just like before
+// Looking at properties or methods in the prototype chain works just like it worked
+// in function constructors or classes
+
+// The big difference is that we didn't need any constructor function or prototype property at all
+// to achieve the exact same thing.
+
+// In practice, this is the least used way of implementing prototypal inheritance,
+// but still very important to know
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
+
+// The big takeaway is that Object.create() creates a new object and the prototype of that object will be
+// the object we passed in
