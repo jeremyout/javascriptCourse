@@ -125,6 +125,14 @@ console.log(jack);
 // Jonas, Matilda, and Jack are all instances of a Person
 console.log(jonas instanceof Person); // true
 
+Person.hey = function () {
+  console.log('Hey there 👋');
+  console.log(this);
+};
+Person.hey();
+// Not inherited, can't do the following
+// jonas.hey();
+
 // Note: Function constructors are not really a feature of the javascript language
 // Instead they are simply a pattern that has been developed by other developers
 
@@ -244,6 +252,7 @@ class PersonCl {
     this.fullName = fullName;
     this.birthYear = birthYear;
   }
+  // Instance methods
   // Methods will be added to the .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -269,6 +278,12 @@ class PersonCl {
 
   get fullName() {
     return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 👋');
+    console.log(this);
   }
 }
 
@@ -301,6 +316,7 @@ Setters and Getters
 */
 
 const walter = new PersonCl('Walter White', 1965);
+PersonCl.hey();
 
 const account = {
   owner: 'Jonas',
@@ -317,3 +333,16 @@ const account = {
 console.log(account.latest);
 
 account.latest = 50;
+
+/*
+Static methods
+*/
+
+// Used 'Array.from(document.querySelectorAll('h1'))' in the browser console
+// The from method is a method attached to the Array constructor. Cannot use the from method on an array
+// Attached to the constructor and not the prototype property of the constructor
+// Therefore all the arrays do not inherit this method
+// from method is in the Array namespace, like Number.parseFloat - not available on numbers
+
+// These static methods are not available on the instances and sometimes they are useful to
+// implement a helper function about a class or abotu a constructor function
