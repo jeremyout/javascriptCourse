@@ -225,3 +225,54 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
+
+/*
+ES6 Classes
+*/
+
+// Classes in JS do not work like traditional classes in other languages like Java or C++
+// Classes in JS are just syntactic sugar over what we learned in the last few videos
+// (Still implement prototypal inheritance behind the scenes, but with a syntax that makes
+// more sense to people coming from other programming languages)
+
+// CLass expression
+// const PersonCl = class {};
+
+// Class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  // Methods will be added to the .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+console.log(Object.getPrototypeOf(jessica) === PersonCl.prototype);
+
+// Can also add a method manually to the prototype
+// PersonCl.prototype.greet = function () {
+//   console.log(`Hey ${this.firstName}`);
+// };
+jessica.greet();
+
+// 1. Classes are NOT hoisted (Function declarations are hoisted
+//    which means we can use them before they are declared in the code, doesn't work with classes)
+
+// 2. Classes are first class citizens (Can pass them into functions and return them from functions)
+//    Classes are just a special kind of function behind the scenes
+
+// 3. The body of a class is always executed in strict mode
+
+// Constructor functions are not old/deprecated syntax, fine to keep using them (Personal preference)
+
+// Some people say that classes are really bad and shouldn't be used.
