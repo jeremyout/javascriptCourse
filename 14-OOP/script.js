@@ -94,7 +94,7 @@ OOP in JavaScript
 /*
 Constructor functions and the new Operator
 */
-
+/*
 // Constructor functions always start with a capital letter
 // Arrow function will not work as a function constructor (no this keyword).
 //    Only function delcarations and function expressions
@@ -135,11 +135,11 @@ Person.hey();
 
 // Note: Function constructors are not really a feature of the javascript language
 // Instead they are simply a pattern that has been developed by other developers
-
+*/
 /*
 Prototypes
 */
-
+/*
 console.log(Person.prototype);
 
 // This is what should be done instead of adding it directly to the object like in
@@ -181,7 +181,7 @@ console.log(jonas, jonas.species);
 // not including inherited properties
 console.log(jonas.hasOwnProperty('firstName'));
 console.log(jonas.hasOwnProperty('species'));
-
+*/
 /*
 Prototypal Inheritance and The Prototype Chain
 */
@@ -198,7 +198,7 @@ Prototypal Inheritance and The Prototype Chain
 /*
 Prototypal Inheritance on Built-In Objects
 */
-
+/*
 console.log(Object.getPrototypeOf(jonas));
 console.log(Object.getPrototypeOf(Object.getPrototypeOf(jonas))); // Top of the protoype chain (Object.prototype)
 console.log(
@@ -233,11 +233,11 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
-
+*/
 /*
 ES6 Classes
 */
-
+/*
 // Classes in JS do not work like traditional classes in other languages like Java or C++
 // Classes in JS are just syntactic sugar over what we learned in the last few videos
 // (Still implement prototypal inheritance behind the scenes, but with a syntax that makes
@@ -310,11 +310,11 @@ jessica.greet();
 // Constructor functions are not old/deprecated syntax, fine to keep using them (Personal preference)
 
 // Some people say that classes are really bad and shouldn't be used.
-
+*/
 /*
 Setters and Getters
 */
-
+/*
 const walter = new PersonCl('Walter White', 1965);
 PersonCl.hey();
 
@@ -333,7 +333,7 @@ const account = {
 console.log(account.latest);
 
 account.latest = 50;
-
+*/
 /*
 Static methods
 */
@@ -350,7 +350,7 @@ Static methods
 /*
 Object.create
 */
-
+/*
 const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -391,3 +391,53 @@ sarah.calcAge();
 
 // The big takeaway is that Object.create() creates a new object and the prototype of that object will be
 // the object we passed in
+*/
+/*
+Inheritance between "classes": Constructor functions
+*/
+
+const Person = function (firstName, birthYear) {
+  // Instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  // this.firstName = firstName;
+  // this.birthYear = birthYear;
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// This is to inherit everything from the person prototype, manually links the Student and Person prototypes
+// VERY IMPORTANT to do this here, needs to be done before adding the introduce method below
+// because if you make this link after adding the introduce method you will overwrite it
+// Student.prototype is now an object that inherits from Person.prototype
+Student.prototype = Object.create(Person.prototype);
+
+// This doesn't work, won't get the prototype chain that we need, DON'T DO THIS
+// Student.prototype = Person.prototype;
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+mike.calcAge();
+
+console.log(mike instanceof Student); // true
+console.log(mike instanceof Person); // true because we linked the prototypes
+console.log(mike instanceof Object); // true (prototype chain)
+
+console.dir(Student.prototype.constructor);
+// JS now thinks that the constructor of Student.prototype is Person
+// The reason for that is that we set the prototype property of the Student using Object.create()
+// To fix this, we do
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
