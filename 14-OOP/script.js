@@ -570,31 +570,35 @@ Another class example
 */
 
 class Account {
+  // 1) Public fields (These are on the instances, not the prototype)
+  locale = navigator.language;
+
+  // 2) Private fields (These are on the instances, not the prototype)
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
     // Protected property
-    this._pin = pin;
+    this.#pin = pin;
     // Protected property
-    this._movements = []; // the _ does not actually make the property truly private
-    this.locale = navigator.language;
+    // this._movements = []; // the _ does not actually make the property truly private
+    // this.locale = navigator.language;
     console.log(`Thanks for opening an account, ${owner}`);
   }
+  // 3) Public methods
   // Public interface
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(value) {
-    this._movements.push(value);
+    this.#movements.push(value);
   }
   // Abstracts the fact that a withdrawl is a negative movement
   withdraw(value) {
     this.deposit(-value);
-  }
-  // Protected method
-  _approveLoan(value) {
-    return true;
   }
 
   requestLoan(value) {
@@ -602,6 +606,13 @@ class Account {
       this.deposit(value);
       console.log('Loan approved');
     }
+  }
+  // Usually used for helper functions (Only available on the class itself, not the instances)
+  static helper() {}
+
+  // 4) Private methods (Not available yet, private methods use # like fields. Leaving as protected)
+  _approveLoan(value) {
+    return true;
   }
 }
 
@@ -617,7 +628,7 @@ acc1.withdraw(140);
 // and potentially introducing bugs
 // The same goes for the pin
 acc1.requestLoan(1000);
-acc1._approveLoan(); // In the real world we shouldn't be allowed to access this
+// acc1.#approveLoan(); // In the real world we shouldn't be allowed to access this
 // This demonstrates why we need data encapsulation and data privacy
 
 /*
@@ -632,3 +643,22 @@ Encapsulation: Protected properties and methods
 // JavaScript classes do not yet support real data privacy and encapsulation
 // In this lecture, we will basically fake encapsulation by using a convention
 console.log(acc1.getMovements());
+
+/*
+Encapsulation: Private class fields and methods
+*/
+
+// There are 4 different kinds of fields and methods
+// - 1) Public fields
+// - 2) Private fields
+// - 3) Public methods
+// - 4) Private methods
+// - There is also static versions of all of the above
+
+console.log(acc1);
+// console.log(acc1.#movements); // SyntaxError: Private field '#movements' must be declared in an enclosing class
+// console.log(acc1.movements); // undefined
+// console.log(acc1.#pin); // SyntaxError: Private field '#movements' must be declared in an enclosing class
+
+// Demo of static method only being available on the class
+Account.helper();
