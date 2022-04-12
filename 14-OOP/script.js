@@ -573,26 +573,32 @@ class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+    // Protected property
+    this._pin = pin;
+    // Protected property
+    this._movements = []; // the _ does not actually make the property truly private
     this.locale = navigator.language;
     console.log(`Thanks for opening an account, ${owner}`);
   }
   // Public interface
+  getMovements() {
+    return this._movements;
+  }
+
   deposit(value) {
-    this.movements.push(value);
+    this._movements.push(value);
   }
   // Abstracts the fact that a withdrawl is a negative movement
   withdraw(value) {
     this.deposit(-value);
   }
-
-  approveLoan(value) {
+  // Protected method
+  _approveLoan(value) {
     return true;
   }
 
   requestLoan(value) {
-    if (this.approveLoan(value)) {
+    if (this._approveLoan(value)) {
       this.deposit(value);
       console.log('Loan approved');
     }
@@ -602,8 +608,8 @@ class Account {
 const acc1 = new Account('Jonas', 'EUR', 1111);
 
 // Deposits/Withdrawls -- Not a good idea at all to do this. Create method instead
-// acc1.movements.push(250);
-// acc1.movements.push(-140);
+// acc1._movements.push(250); // can still do this with the underscore, but other developers will know its wrong
+// acc1._movements.push(-140);
 acc1.deposit(250);
 acc1.withdraw(140);
 
@@ -611,5 +617,18 @@ acc1.withdraw(140);
 // and potentially introducing bugs
 // The same goes for the pin
 acc1.requestLoan(1000);
-acc1.approveLoan(); // In the real world we shouldn't be allowed to access this
+acc1._approveLoan(); // In the real world we shouldn't be allowed to access this
 // This demonstrates why we need data encapsulation and data privacy
+
+/*
+Encapsulation: Protected properties and methods
+*/
+
+// There are 2 big reasons why we need encapsulation and data privacy:
+// - Prevent code from outside a class to accidentally manipulate data inside our class
+// - When we expose only a small interface, a small API consisting only of a few public methods
+//   then we can change all the other internal methods with more confidence
+
+// JavaScript classes do not yet support real data privacy and encapsulation
+// In this lecture, we will basically fake encapsulation by using a convention
+console.log(acc1.getMovements());
