@@ -395,7 +395,7 @@ sarah.calcAge();
 /*
 Inheritance between "classes": Constructor functions
 */
-
+/*
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -441,3 +441,87 @@ console.dir(Student.prototype.constructor);
 // To fix this, we do
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
+*/
+
+/*
+Inheritance between classes: ES6 Classes
+*/
+
+// Class declaration
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  // Instance methods
+  // Methods will be added to the .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) {
+      this._fullName = name;
+    } else {
+      alert(`${name} is not a full name`);
+    }
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 👋');
+    console.log(this);
+  }
+}
+
+// Classes are really just a layer of abstraction over constructor functions
+// To implement inheritance between ES6 classes, we only need 2 ingredients
+// - Extend keyword (Links prototypes behind the scenes without us having to think about it)
+// - Super function
+
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    // Don't need to do this
+    // PersonCl.call()
+    // Instead we use the super function, this always needs to happen first!
+    super(fullName, birthYear); // This call is responsible for creating the this keyword for this subclass
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+// Could comment out the entire constructor function above and this would still work
+// const martha = new StudentCl('Martha Jones', 2012);
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+
+// The mechanism of inheritance can actually be very problematic and dangerous in the real world
+// when we are designing software
