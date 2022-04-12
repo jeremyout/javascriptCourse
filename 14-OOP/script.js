@@ -530,7 +530,7 @@ martha.calcAge();
 /*
 Inheritance between classes: Object.create()
 */
-
+/*
 const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -563,3 +563,53 @@ jay.calcAge();
 // and not about the new operator. It's just objects linked to other objects
 
 // ES6 classes and constructor functions are used way more in the real world
+*/
+
+/*
+Another class example
+*/
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  // Public interface
+  deposit(value) {
+    this.movements.push(value);
+  }
+  // Abstracts the fact that a withdrawl is a negative movement
+  withdraw(value) {
+    this.deposit(-value);
+  }
+
+  approveLoan(value) {
+    return true;
+  }
+
+  requestLoan(value) {
+    if (this.approveLoan(value)) {
+      this.deposit(value);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+
+// Deposits/Withdrawls -- Not a good idea at all to do this. Create method instead
+// acc1.movements.push(250);
+// acc1.movements.push(-140);
+acc1.deposit(250);
+acc1.withdraw(140);
+
+// There is nothing stopping someone on our team from interacting with the movements manually
+// and potentially introducing bugs
+// The same goes for the pin
+acc1.requestLoan(1000);
+acc1.approveLoan(); // In the real world we shouldn't be allowed to access this
+// This demonstrates why we need data encapsulation and data privacy
