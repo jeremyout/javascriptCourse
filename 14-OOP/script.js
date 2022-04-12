@@ -446,7 +446,7 @@ console.dir(Student.prototype.constructor);
 /*
 Inheritance between classes: ES6 Classes
 */
-
+/*
 // Class declaration
 class PersonCl {
   constructor(fullName, birthYear) {
@@ -525,3 +525,41 @@ martha.calcAge();
 
 // The mechanism of inheritance can actually be very problematic and dangerous in the real world
 // when we are designing software
+*/
+
+/*
+Inheritance between classes: Object.create()
+*/
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  // This has nothing to do with any constructor function because we're not using the 'new' operator
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto); // Student inherits from Person
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, 'Computer Science');
+jay.introduce();
+jay.calcAge();
+
+// In this version, we don't worry about constructors anymore and also not about prototype properties
+// and not about the new operator. It's just objects linked to other objects
+
+// ES6 classes and constructor functions are used way more in the real world
