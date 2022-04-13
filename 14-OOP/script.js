@@ -681,3 +681,102 @@ Chaining Methods
 acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
 console.log(acc1.getMovements());
 // Returning the object makes the most sense in methods that set some property
+
+/*
+ES6 Classes Summary
+*/
+
+// class Student extends Person {
+//   university = 'University of Lisbon';
+//   #studyHours = 0;
+//   #course;
+//   static numSubjects = 10;
+
+//   constructor(fullName, birthYear, startYear, course) {
+//     super(fullName, birthYear);
+//     this.startYear = startYear;
+//     this.#course = course;
+//   }
+
+//   introduce() {
+//     console.log(`I study ${this.#course} at ${this.university}`);
+//   }
+
+//   study(h) {
+//     this.#makeCoffee();
+//     this.#studyHours += h;
+//   }
+
+//   #makeCoffee() {
+//     console.log(`Here is a coffee for you!`);
+//   }
+
+//   get testScore() {
+//     return this._testScore;
+//   }
+
+//   set testScore(score) {
+//     this._testScore = score <= 28 ? score : 0;
+//   }
+
+//   static printCirriculum() {
+//     console.log(`There are ${this.numSubjects} subjects`);
+//   }
+// }
+
+// const jonas = new Student('Jonas', 2020, 2037, 'Medicine');
+
+// In the class above:
+// - Student is the child class
+// - Person is the parent class
+// - Inheritance between classes automatically sets the prototype
+
+// - University is a public field (Similar to a property, available on created object)
+// -  Study hours and course are private fields
+// - Static public field available only on a class
+
+// - Constructor method, automatically called by the new operator
+//   mandatory in a regular class, might be omitted in child class
+
+// Inside the constructor is a call to the parent class (super)
+//    Necessary with extend
+//    Needs to happen before accessing this (First thing in the constructor)
+//    - Instance properties (startYear, #course) (available on created objects)
+//    The difference between instance properties and public fields is that
+//    instance properties are set based on input data from the constructor
+
+//   Instance properties are more personalized and unique for each object
+//   while the public fields are usually for something that is common
+//   to all the objects
+
+// #course in the constructor is redefining a private field
+
+// introduce is a normal public method
+
+// Study is referencing a private field and a private method
+// NOTE: Private method might not work yet depending on the browser (Very new)
+//   - Fake alternative, use _ instead of #
+
+// Getter method (testScore)
+// basically so that we can get a value out of an object
+// by writing a property instead of writing a method (Student.testscore instead of Student.testScore())
+
+// Same for the setter method, can just just Student.testscore = 50
+// instead of calling the method like Student.testScore(50)
+
+// Keep in mind that if you have a setter for a property that is already
+// defined in the constructor then you need to create a new property
+// with the _ in front of it. This is a convention that you should
+// use in this case. And then in the getter, you should return
+// the _ variant too
+
+// Static method is available only on the class, not any
+// instances of the class. It cannot access the instance properties
+// nor the instance methods, only static ones
+// Generally, we use static methods as helper methods for the class
+
+// A few things to remember about classes:
+// - Classes are just "syntactic sugar" over constructor functions
+// - Classes are NOT hoisted
+// - Classes are first-class citizens
+// - Class body is always executed in strict mode
