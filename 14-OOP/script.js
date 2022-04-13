@@ -595,16 +595,19 @@ class Account {
 
   deposit(value) {
     this.#movements.push(value);
+    return this;
   }
   // Abstracts the fact that a withdrawl is a negative movement
   withdraw(value) {
     this.deposit(-value);
+    return this;
   }
 
   requestLoan(value) {
     if (this._approveLoan(value)) {
       this.deposit(value);
       console.log('Loan approved');
+      return this;
     }
   }
   // Usually used for helper functions (Only available on the class itself, not the instances)
@@ -662,3 +665,19 @@ console.log(acc1);
 
 // Demo of static method only being available on the class
 Account.helper();
+
+/*
+Chaining Methods
+*/
+
+// Just like we used, for example, filter().map().reduce() previously,
+// we can implement the same ability of chaining in the methods of our
+// class.
+// We just need to return the object itself at the end of a method that
+// we want to be chainable
+
+// Doesn't work initially, gives an error:
+// Uncaught TypeError: Cannot read properties of undefined (reading 'deposit')
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+console.log(acc1.getMovements());
+// Returning the object makes the most sense in methods that set some property
