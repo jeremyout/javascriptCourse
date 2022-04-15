@@ -74,3 +74,21 @@ Project planning
 // Flowchart
 
 // Whenever we start to build a flowchart, its a good idea to start with events
+
+/*
+Using the Geolocation API
+*/
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      //   console.log(position);
+      const { latitude } = position.coords;
+      const { longitude } = position.coords;
+      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+    },
+    function () {
+      console.log('fail');
+    }
+  );
+}
