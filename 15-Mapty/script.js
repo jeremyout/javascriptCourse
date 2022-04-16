@@ -149,9 +149,25 @@ inputType.addEventListener('change', function () {
 });
 
 /*
-Displaying a map using Leaflet Library
+Project Architecture
 */
 
-/*
-Displaying a map marker
-*/
+// Architecture is all about giving the project a structure
+// In this project, the structure will come from classes and objects
+
+// One of the most important aspects of any structure is to decide where and how to store the data
+
+// Parent class will be workout and store the distance, duration, and coords(location)
+// Two child classes, one for running and one for cycling
+// running has cadence and pace, cycling has elevation gain and speed
+
+// See video around 5:13 for explanation, otherwise look at Mapty-architecture-part-1.png
+
+// We will create a big class called App that will store all workouts
+// We already have functionality for handling all the events, the App class will store all this
+// functionality as methods
+
+// Loading the page will trigger the constructor of the object we're going to create through this App class
+
+// Having a class that contains all the data and methods about the application is a pretty common thing
+// that you will see for simple applications like this
