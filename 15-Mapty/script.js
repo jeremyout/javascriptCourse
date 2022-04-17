@@ -79,74 +79,102 @@ Project planning
 Using the Geolocation API
 */
 
-let map, mapEvent;
+class App {
+  #map;
+  #mapEvent;
+  constructor() {
+    this._getPosition();
 
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      //   console.log(position);
-      const { latitude } = position.coords;
-      const { longitude } = position.coords;
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+    // The this keyword in an event handler function will always have the this keyword set to the
+    // DOM element to which it is attached (form in this case)
+    form.addEventListener('submit', this._newWorkout.bind(this));
 
-      const coords = [latitude, longitude];
+    // In the real world, if you are using event handlers inside classes, you will be using bind
+    // to set the this keyword all the time
 
-      map = L.map('map').setView(coords, 13);
-      // console.log(map);
+    inputType.addEventListener('change', this._toggleElevationField);
+  }
 
-      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-
-      //   L.marker(coords)
-      //     .addTo(map)
-      //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      //     .openPopup();
-
-      // Handle clicks on map
-      map.on('click', function (mapE) {
-        mapEvent = mapE;
-        form.classList.remove('hidden');
-        inputDistance.focus();
-      });
-    },
-    function () {
-      console.log('fail');
+  _getPosition() {
+    if (navigator.geolocation) {
+      // Calls _loadMap and passes the location in with the _loadMap call
+      // When the callback function is called, it is treated as  a regular function
+      // call. On regular function calls, the this keyword is undefined
+      navigator.geolocation.getCurrentPosition(
+        this._loadMap.bind(this),
+        function () {
+          console.log('fail');
+        }
+      );
     }
-  );
+  }
+
+  _loadMap(position) {
+    //   console.log(position);
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+    console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+
+    const coords = [latitude, longitude];
+
+    console.log(this);
+    this.#map = L.map('map').setView(coords, 13);
+    // console.log(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map);
+
+    //   L.marker(coords)
+    //     .addTo(map)
+    //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //     .openPopup();
+
+    // Handle clicks on map
+    this.#map.on('click', this._showForm.bind(this));
+  }
+
+  _showForm(mapE) {
+    this.#mapEvent = mapE;
+    form.classList.remove('hidden');
+    inputDistance.focus();
+  }
+
+  _toggleElevationField() {
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+  }
+
+  _newWorkout(e) {
+    e.preventDefault();
+    // Clear input fields
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        '';
+    // Display the marker
+    // console.log('clicked on map', mapEvent.latlng);
+    const { lat, lng } = this.#mapEvent.latlng;
+    L.marker([lat, lng])
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+          className: 'running-popup',
+        })
+      )
+      .setPopupContent('Workout')
+      .openPopup();
+  }
 }
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  // Clear input fields
-  inputDistance.value =
-    inputDuration.value =
-    inputCadence.value =
-    inputElevation.value =
-      '';
-  // Display the marker
-  console.log('clicked on map', mapEvent.latlng);
-  const { lat, lng } = mapEvent.latlng;
-  L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup(
-      L.popup({
-        maxWidth: 250,
-        minWidth: 100,
-        autoClose: false,
-        closeOnClick: false,
-        className: 'running-popup',
-      })
-    )
-    .setPopupContent('Workout')
-    .openPopup();
-});
-
-inputType.addEventListener('change', function () {
-  inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-});
+// The creation of the app and getting the location is done right as the page loads
+const app = new App();
 
 /*
 Project Architecture
