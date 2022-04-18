@@ -442,3 +442,21 @@ Project Architecture
 
 // Having a class that contains all the data and methods about the application is a pretty common thing
 // that you will see for simple applications like this
+
+/*
+Final Considerations
+*/
+
+// Things that could be added/improved
+
+// - Ability to edit a workout
+// - Ability to delete a workout
+// - Ability to delete all workouts
+// - Ability to sort workouts by a certain field (ex: distance)
+// - Re-build Running and Cycling objects coming from localStorage(fix the bug from the last lecture)
+// - More realistic error and confirmation messages
+// - Ability to position the map to show all workouts (very hard)
+// - Ability to draw lines and shapes instead of just points (very hard)
+// - Geocode location from coordinates ("Run in Faro, Portugal") (Only after asynchronous javascript section)
+//    - Use a third party web api to get this information
+// - Display weather data for workout time and place (Only after asynchronous javascript section)
