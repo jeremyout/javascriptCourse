@@ -149,17 +149,19 @@ class App {
   #mapEvent;
   #workouts = []; // Would otherwise put this in the constructor as this.workouts = [];
   constructor() {
+    // Get user position
     this._getPosition();
 
+    // Get data from localStorage
+    this._getLocalStorage();
+
+    // Attach event handlers
     // The this keyword in an event handler function will always have the this keyword set to the
     // DOM element to which it is attached (form in this case)
     form.addEventListener('submit', this._newWorkout.bind(this));
-
     // In the real world, if you are using event handlers inside classes, you will be using bind
     // to set the this keyword all the time
-
     inputType.addEventListener('change', this._toggleElevationField);
-
     // Can't add an event handler to a workout that doesn't exist yet
     // What we have to do here is event delegation
     // - Add devent handler to the parent element (workouts container)
@@ -188,7 +190,7 @@ class App {
 
     const coords = [latitude, longitude];
 
-    console.log(this);
+    // console.log(this);
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     // console.log(map);
 
@@ -204,6 +206,10 @@ class App {
 
     // Handle clicks on map
     this.#map.on('click', this._showForm.bind(this));
+    this.#workouts.forEach(work => {
+      // At this point, the map is now available
+      this._renderWorkoutMarker(work);
+    });
   }
 
   _showForm(mapE) {
@@ -277,7 +283,7 @@ class App {
 
     // Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
+    // console.log(workout);
 
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
@@ -287,6 +293,9 @@ class App {
 
     // Hide form and Clear input fields
     this._hideForm();
+
+    // Set localStorage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -361,19 +370,49 @@ class App {
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
-    console.log(workoutEl);
+    // console.log(workoutEl);
     if (!workoutEl) return;
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
+    // console.log(workout);
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
       pan: { duration: 1 },
     });
 
     // Using the public interface
-    workout.click();
+    // workout.click();
+    // Disabled due to issues with local storage. We could create new objects from the restored data
+    // if we wanted to
+  }
+
+  _setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+    // localStorage is a very simple API, only advised to use for small amounts of data
+    // localStorage is 'blocking' - will learn about it in next section
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+    // console.log(data);
+    if (!data) return;
+    this.#workouts = data;
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+      // Cannot render on the map because the map does not exist right away when the page is
+      // first loaded
+      // this._renderWorkoutMarker(work);
+    });
+    // At this point after restoring from localStorage, the entire prototype chain is gone
+    // When we converted our objects into a string and then back into an object, we lost the prototype chain
+    // What we get back are just normal objects and cannot inherit any of their methods
+  }
+
+  reset() {
+    // Empty contents from localStorage
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 
