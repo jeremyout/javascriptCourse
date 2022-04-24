@@ -117,3 +117,108 @@ const getCountryData = function (country) {
 getCountryData('portugal');
 getCountryData('usa');
 getCountryData('germany');
+
+/*
+How the web works: Requests and Responses
+*/
+
+// What happens when we access a web server?
+// - Client (browser) sends a request to the server
+// - Server then sends a response
+// This is called the request-response model, or CLient-server architecture
+
+// Example from last lecture:
+// https://restcountries.com/v2/name/${country}
+// Protocol - http or https
+// Domain name - restcountries.com
+// Resource - rest/v2/name/usa
+
+// This domain name, restcountries.com, is not actually the address of the
+// real server that we're trying to access. It's just a nice name that is easy to memorize
+
+// What this means is that we need a way of converting the domain name to the real address of the server
+// That happens through a DNS (Domain Name Server), DNS is a special kind of server
+// (like the phone books of the internet)
+
+// The first step that happens when we access any web server, is that the browser makes the
+// request to a DNS (DNS Lookup) and this special server will match the web address of the URL to
+// the servers real IP address
+// This happens through your ISP
+// What's important to retain is that the domain is not the real address, a DNS will convert the
+// domain to the real IP address
+// After the real IP has been sent back to the browser, we can call it
+
+// HTTP Request Example
+// https:// 104.27.142.889:443
+// Protocol - http or https
+// IP Address - 104.27.142.889
+// Port Number - 443 (Default 443 for HTTPS, 80 for HTTP)
+
+// Port number is just to identify a specific service that is running on a server
+// Port number has nothing to do with the /rest/v2/name/usa
+
+// The second step - Once we have the real IP address, a TCP socket connection is established
+// between the browser and the server, they are now finally connected. This connection is typically
+// kept alive for the entire time that it takes to transfer all files from the website or all data.
+
+// What are TCP/IP?
+// TCP is the Transmission Control Protocol
+// IP is the Internet Protocol
+// They are basically the internets fundamental control system
+// They set the rules about how data moves on the internet
+
+// Third Step- Make an HTTP request
+// HTTP stands for HyperText Transfer Protocol
+// After TCP/IP, HTTP is another communication protocol
+// A communication protocol is a system of rules that allows two or more parties to communicate
+
+// In the case of HTTP, it's just a protocol that allows clients and web servers to communicate
+// That works by sending request and response messages from client to server and back
+
+// An HTTP Request message will look something like this:
+// GET v2/name/${country} HTTP 1.1 - Called the start line: HTTP Method + request target + HTTP version
+// Host: www.google.com     |
+// User-Agent: Mozilla/5.0  | - These three lines are the request headers (many different possibilities)
+// Accept-Language: en-US   |
+// <BODY> - Request body (only when sending data to server (coming from a form), example: POST)
+
+// HTTP methods - there are many available, but the most important ones are:
+// - GET - For requesting data
+// - POST - For sending data
+// - PUT/PATCH - For modifying data
+
+// About the request target - this is where the server is told that we want
+// to access the '/v2/name/us' resource in this case
+// This was in the URL before, and now it is simply set as the target in the HTTP request
+// If the target was empty, just a slash, then we would be accessing the websites root
+
+// The main difference between HTTP and HTTPS is that HTTPS is encrypted using TLS or SSL
+// Besides that, the logic behind HTTP requests and responses also applies to HTTPS
+
+// Fourth Step - Once the web server has our data or webpage ready, it will send the data back
+// using an HTTP response
+
+// HTTP Response example:
+// HTTP /1.1 200 OK -- Start line: HTTP version + status code + status message
+// Date: Fri, 18 Jan 2021       |
+// Content-Type: text/html      | - These three lines are HTTP Response headers (many different possibilities)
+// Transfer-Encoding: chunked   |   - Can also make up our own
+// <BODY>  -- Response Body - Usually contains the JSON data coming from an API or the HTML of a website we requested
+
+// An API is typically just a single request and response, however if its a webpage we are accessing there
+// will be many more requests and responses. That's because when we do the first request, all we get back
+// is the initial HTML. The HTML is then scanned by the browser for all the assets that it needs to build the
+// entire webpage (JS, CSS, Images, etc.). Process is repeated for each file.
+
+// When all the files have finally arrived, the webpage can be rendered in the browser according to the
+// HTML, CSS, and JS specifications that we already know
+
+// We said before that TCP and IP are the communication protocols that define how data travels across the web
+// First, the job of TCP is to break the requests and responses down into thousands of small chunks
+// called packets before they are sent. Once the small packets arrive at their location, TCP will reassemble
+// all the packets into the original request or response. This is necessary so that each packet can take a
+// different route through the internet. This way, the message arrives at the destination as quick as possible
+// which would not be possible if we sent the entire data as a big chunk.
+
+// As a second part, the job of the IP protocol is to send and route these packets through the internet. So
+// it ensures that they arrive at the destination they should go using IP addresses on each packet.
