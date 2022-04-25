@@ -407,8 +407,26 @@ const renderCountry = function (data, className = '') {
 
 // Simplified with arrow functions
 const getCountryData = function (country) {
+  // Country 1
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbor = data[0].borders[0];
+      if (!neighbor) return;
+      // Country 2
+      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
 getCountryData('portugal');
+// getCountryData('germany');
+
+/*
+Chaining promises
+*/
+
+// Modifications above
+
+// Always return the chain and handle it outside, do not chain inside of callbacks! (Line 418 above)
