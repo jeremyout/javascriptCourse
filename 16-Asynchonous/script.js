@@ -233,7 +233,7 @@ Welcome to callback hell
 // which one finished first.
 
 // To accomplish this we need to implement a sequence of AJAX calls
-
+/*
 const renderCountry = function (data, className = '') {
   const html = `
     <article class="country ${className}">
@@ -308,3 +308,61 @@ setTimeout(() => {
 // hard to understand and difficult to reason will have more bugs and is just worse code.
 
 // Fortunately for us, there is a way to escape callback hell and that is by using promises
+*/
+
+/*
+Promises and the Fetch API
+*/
+
+// const request = new XMLHttpRequest();
+// request.open('GET', `https://restcountries.com/v2/name/${country}`);
+// request.send();
+
+const request = fetch(`https://restcountries.com/v2/name/usa`);
+console.log(request);
+
+// Promise - An object that is used as a placeholder for the future result of an asynchronous operation.
+// Promise (Less formal) - A container for an asynchronously derived value.
+// Promise (Even less formal) - A container for a future value.
+// Example of a future value - A response from an AJAX call.
+
+// A promise is just like a lottery ticket
+// A lottery ticket is a promise that I will receive money if I guess the correct outcome
+// I buy lottery ticket (promise) now
+// Lottery draw happens asynchronously
+// If correct outcome, I receive money because it was promised
+
+// What's the big advantage of using promises?
+// - By using promises, we no longer need to rely on events and callbacks passed into asynchronous
+//   functions to handle asynchronous results
+//    - Events and callback functions can sometimes cause unpredictable results
+// - Instead of nesting callbacks, we can chain promises for a sequence of asynchronous operations
+//    - Escaping callback hell
+
+// The promise lifecycle
+// Pending - before the future value is available
+//         - Asynchronous task is still doing its work in the background
+// Settled - Asynchronous task has finished.
+//         - Two states: Fulfilled and Rejected.
+//         - A fulfilled promise is a promise that has successfully resulted in a value as we expected
+//         - A rejected promise means there has been an error in the asynchronous task
+
+// These different states are very important to understand because when we use promises in our code
+// we will be able to handle these different states in order to do something as a result of either a
+// successful promise or a rejected one
+
+// Another important thing about promises is that a promise is only settled once and from there the
+// state will remain unchanged forever. The promise is either fulfilled or rejected but its impossible
+// to change that state.
+
+// These different states are relevant and useful when we use a promise to get a result.
+// - This is known as consuming a promise.
+
+// We consume a promise when we already have a promise, for example the promise that was returned
+// from fetch API
+
+// In order for a promise to exist, it must first be built. The fetch API is what builds the promise,
+// we don't have to build it ourselves
+
+// Most of the time we will just consume promises which is the easier and more useful part.
+// But sometimes we need to build a promise and not just consume it.
