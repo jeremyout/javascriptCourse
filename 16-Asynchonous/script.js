@@ -374,6 +374,11 @@ Consuming promises
 // const request = fetch(`https://restcountries.com/v2/name/usa`);
 // console.log(request);
 
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+};
+
 const renderCountry = function (data, className = '') {
   const html = `
     <article class="country ${className}">
@@ -390,7 +395,7 @@ const renderCountry = function (data, className = '') {
     </article>
     `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 // const getCountryData = function (country) {
@@ -418,9 +423,21 @@ const getCountryData = function (country) {
       return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      // Handle rejected promise
+      console.error(`${err} 💥💥💥`);
+      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      // This will always be called, no matter if the promise is fulfilled or rejected
+      // Finally method is not always useful
+      // One good example is to hide loading spinners
+      countriesContainer.style.opacity = 1;
+      // Catch method always returns a promise so that's why we can use the finally method
+    });
 };
-getCountryData('portugal');
+// getCountryData('portugal');
 // getCountryData('germany');
 
 /*
@@ -430,3 +447,19 @@ Chaining promises
 // Modifications above
 
 // Always return the chain and handle it outside, do not chain inside of callbacks! (Line 418 above)
+
+/*
+Handling rejected promises
+*/
+
+// The only way in which a fetch promise rejects is when a user loses their internet connection
+
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
+
+// Errors propogate down the chain
+
+getCountryData('sdfsdfsdf');
+// With a 404 error, the fetch promise will still get fulfilled so our catch error cannot pickup on this error
+// In this case, we want to tell the user the country was not found
