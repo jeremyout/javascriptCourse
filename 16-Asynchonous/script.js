@@ -410,24 +410,80 @@ const renderCountry = function (data, className = '') {
 //     });
 // };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok)
+      // Throw immediately terminates the current function, like return does
+      throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
 // Simplified with arrow functions
+// const getCountryData = function (country) {
+//   // Country 1
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => {
+//       console.log(response);
+//       if (!response.ok)
+//         // Throw immediately terminates the current function, like return does
+//         throw new Error(`Country not found (${response.status})`);
+
+//       return response.json();
+//     })
+//     .then(data => {
+//       renderCountry(data[0]);
+//       // const neighbor = data[0].borders[0];
+//       const neighbor = 'asdasdaw';
+//       if (!neighbor) return;
+//       // Country 2
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+//     })
+//     .then(response => {
+//       if (!response.ok)
+//         // Throw immediately terminates the current function, like return does
+//         throw new Error(`Country not found (${response.status})`);
+//       return response.json();
+//     })
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(err => {
+//       // Handle rejected promise
+//       console.error(`${err} 💥💥💥`);
+//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       // This will always be called, no matter if the promise is fulfilled or rejected
+//       // Finally method is not always useful
+//       // One good example is to hide loading spinners
+//       countriesContainer.style.opacity = 1;
+//       // Catch method always returns a promise so that's why we can use the finally method
+//     });
+// };
+// getCountryData('portugal');
+// getCountryData('germany');
+
+// Reworked to use helper function
 const getCountryData = function (country) {
   // Country 1
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => response.json())
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
     .then(data => {
       renderCountry(data[0]);
-      const neighbor = data[0].borders[0];
-      if (!neighbor) return;
+      const neighbor = data[0].borders ? data[0].borders[0] : undefined; // workaround found in comments on lecture
+      console.log(neighbor);
+      // const neighbor = 'asdasdaw';
+      if (!neighbor) throw new Error('No neighbor found!');
       // Country 2
-      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbor}`,
+        'Country not found'
+      );
     })
-    .then(response => response.json())
     .then(data => renderCountry(data, 'neighbour'))
     .catch(err => {
       // Handle rejected promise
       console.error(`${err} 💥💥💥`);
-      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+      renderError(`Something went wrong 💥💥 ${err.message}... Try again!`);
     })
     .finally(() => {
       // This will always be called, no matter if the promise is fulfilled or rejected
@@ -437,8 +493,6 @@ const getCountryData = function (country) {
       // Catch method always returns a promise so that's why we can use the finally method
     });
 };
-// getCountryData('portugal');
-// getCountryData('germany');
 
 /*
 Chaining promises
@@ -460,6 +514,17 @@ btn.addEventListener('click', function () {
 
 // Errors propogate down the chain
 
-getCountryData('sdfsdfsdf');
+getCountryData('australia');
 // With a 404 error, the fetch promise will still get fulfilled so our catch error cannot pickup on this error
 // In this case, we want to tell the user the country was not found
+
+/* 
+Throwing errors manually
+*/
+
+// Any error will cause any promise to reject.
+
+// Why should we handle errors?
+// It's the only way to generate an error on the screen for the user
+// Even more important, it's a bad practice to just leave rejected promises hanging around without
+// handling them. Always use .catch and if necessary you can also use finally
