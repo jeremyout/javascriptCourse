@@ -51,11 +51,6 @@ Test data:
 /////////////////////////////////////////////////////////
 const countriesContainer = document.querySelector('.countries');
 
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
-};
-
 const renderCountry = function (data, className = '') {
   const html = `
       <article class="country ${className}">
@@ -72,47 +67,7 @@ const renderCountry = function (data, className = '') {
       </article>
       `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
-};
-
-const getCountryData = function (country) {
-  // Country 1
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => {
-      //   console.log(response);
-      if (!response.ok)
-        // Throw immediately terminates the current function, like return does
-        throw new Error(`Country not found (${response.status})`);
-
-      return response.json();
-    })
-    .then(data => {
-      renderCountry(data[0]);
-      const neighbor = data[0].borders ? data[0].borders[0] : undefined;
-      //   const neighbor = 'asdasdaw';
-      if (!neighbor) return;
-      // Country 2
-      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
-    })
-    .then(response => {
-      if (!response.ok)
-        // Throw immediately terminates the current function, like return does
-        throw new Error(`Country not found (${response.status})`);
-      return response.json();
-    })
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => {
-      // Handle rejected promise
-      console.error(`${err} 💥💥💥`);
-      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
-    })
-    .finally(() => {
-      // This will always be called, no matter if the promise is fulfilled or rejected
-      // Finally method is not always useful
-      // One good example is to hide loading spinners
-      countriesContainer.style.opacity = 1;
-      // Catch method always returns a promise so that's why we can use the finally method
-    });
+  countriesContainer.style.opacity = 1;
 };
 /////////////////////////////////////////////////////////
 // CODE PORTED FROM LECTURE TO RENDER COUNTRY DATA
@@ -132,13 +87,19 @@ const whereAmI = function (lat, lng) {
       console.log(data);
       if (!data.city) throw new Error('No City found');
       console.log(`You are in ${data.city}, ${data.country}`);
-      getCountryData(`${data.country}`);
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
     })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country not found (${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
     .catch(err => {
       console.error(`Something went wrong -- ${err.message}`);
     });
 };
 
-// whereAmI(52.508, 13.381);
+whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474);
+// whereAmI(-33.933, 18.474);
