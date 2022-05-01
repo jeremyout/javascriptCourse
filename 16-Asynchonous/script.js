@@ -630,7 +630,7 @@ Asynchronous behind the scenes: The event loop
 /*
 The event loop in practice
 */
-
+/*
 console.log('Test start');
 setTimeout(() => console.log('0 second timer'), 0);
 Promise.resolve('Resolved promise 1').then(res => console.log(res));
@@ -645,3 +645,94 @@ console.log('Test end');
 // finally, setTimeout callback is processed
 
 // You can't really do high precision things using javascript timers and promises
+*/
+
+/*
+Building a simple promise
+*/
+
+// Promises are essentially just a special kind of object
+// It takes one argument, the executor function
+// As soon as the Promise constructor runs it will automatically execute the executor function we pass in
+// It will execute the executor function by passing in 2 other arguments:
+// Resolve and reject functions
+// The executor function specified is the function that will contain the asynchronous behavior we are
+// trying to handle with a promise. The executor function should eventually produce a resolved value.
+// resolved value = The value that is going to be the future value of the promise.
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happening 🔮');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      // Calling the resolve function will mark the promise as a fulfilled promise/resolved promise
+      // We pass the fulfilled value of the promise into the resolve function so that it can later
+      // be consumed with the then method.
+      resolve('You WIN 💰');
+    } else {
+      // Into the reject function, we pass in the error msg that we later want to use in the catch method
+      reject(new Error('You lost your money 💩'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// This is how we encapsulate any asynchronous behavior into a promise. How we abstract it away like in
+// lotteryPromise above. And then all we have to do is consume the promise.
+
+// In practice most of the time all we do is consume promises. We usually only build promises to wrap
+// old callback based functions into promises. This is a process we call Promisifying.
+// Promisifying means to convert callback based asynchronous behavior to promise based.
+
+// Promisify the setTimeout function and create a wait function
+// Usually this is what we do: Create a function and returning a promise, encapsulating the asynchronous
+// behavior even further. (Essentially this is what the fetch function does).
+const wait = function (seconds) {
+  // In this case, we don't need a reject function. It's impossible for the timer to fail
+  return new Promise(function (resolve) {
+    // In this case we're not going to pass any resolved value into the resolve function
+    // because that's not mandatory. In the case of this timer its not necessary
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+// Consume the promise
+// wait(2)
+//   .then(() => {
+//     console.log('I waited for 2 seconds');
+//     return wait(1);
+//   })
+//   .then(() => console.log('I waited for 1 second'));
+
+// Previous Example of callback hell
+// setTimeout(() => {
+//   console.log('1 second passed');
+//   setTimeout(() => {
+//     console.log('2 seconds passed');
+//     setTimeout(() => {
+//       console.log('3 seconds passed');
+//       setTimeout(() => {
+//         console.log('4 seconds passed');
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+
+// Reworking this old example into promise
+wait(1)
+  .then(() => {
+    console.log('1 second passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 seconds passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 seconds passed');
+    return wait(1);
+  })
+  .then(() => console.log('4 seconds passed'));
+
+// Finally, there is also a way to very easily create a fulfilled or rejected promise immediately
+// Static method on the promise constructor
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('Problem!')).catch(x => console.error(x));
