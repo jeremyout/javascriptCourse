@@ -811,34 +811,61 @@ const getPosition = function () {
 // Async/await is only about consuming promises, nothing to do with building them
 
 const whereAmI = async function () {
-  // Get Geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
-  // Reverse geocoding
-  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
+  try {
+    // Get Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+    // Reverse geocoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
 
-  // This is what we've done in the past, and is exactly the same as the new async/await below
-  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
-  //   console.log(res)
-  // );
+    // This is what we've done in the past, and is exactly the same as the new async/await below
+    // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+    //   console.log(res)
+    // );
 
-  // The await here basically stops executions until the promise is fulfilled
-  //(until data has been fetched in this case)
-  // Since this is an async function, stopping execution here is non-blocking
-  // Since this is an async function, it is running asynchronously in the background
-  // Country data
-  const res = await fetch(
-    `https://restcountries.com/v2/name/${dataGeo.country}`
-  );
-  const data = await res.json();
-  console.log(data);
-  renderCountry(data[0]);
+    // The await here basically stops executions until the promise is fulfilled
+    //(until data has been fetched in this case)
+    // Since this is an async function, stopping execution here is non-blocking
+    // Since this is an async function, it is running asynchronously in the background
+    // Country data
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error('Problem getting country');
+    const data = await res.json();
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(`${err} 💣`);
+    renderError(`💥 ${err.message}`);
+  }
 };
+whereAmI();
+whereAmI();
 whereAmI();
 console.log('First');
 
 // Async/Await is just syntactic sugar over the then method in promises.
 // Behind the scenes we are still using promises, but async/await is just a different way
 // of consuming them
+
+/*
+Error Handling with try...catch
+*/
+
+// With async/await, we can't use the catch method that we used before because we can't really attach it
+// anywhere so we use something called a try...catch statement
+
+// Try...catch has nothing to do with async/await but we can still use it to catch errors in async functions
+
+// Just a quick example
+// try {
+//   let y = 1;
+//   const x = 2;
+//   y = 3;
+// } catch (err) {
+//   alert(err.message);
+// }
