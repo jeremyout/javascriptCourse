@@ -395,7 +395,7 @@ const renderCountry = function (data, className = '') {
     </article>
     `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 // const getCountryData = function (country) {
@@ -508,9 +508,9 @@ Handling rejected promises
 
 // The only way in which a fetch promise rejects is when a user loses their internet connection
 
-btn.addEventListener('click', function () {
-  getCountryData('portugal');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('portugal');
+// });
 
 // Errors propogate down the chain
 
@@ -650,7 +650,7 @@ console.log('Test end');
 /*
 Building a simple promise
 */
-
+/*
 // Promises are essentially just a special kind of object
 // It takes one argument, the executor function
 // As soon as the Promise constructor runs it will automatically execute the executor function we pass in
@@ -736,3 +736,61 @@ wait(1)
 // Static method on the promise constructor
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
+*/
+
+/*
+Promisifying the Geolocation API
+*/
+
+console.log('Getting position');
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+// From codingChallenge1.js - modified to be promisified
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      // console.log(pos.coords);
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(response => {
+      if (!response.ok && response.status === 403)
+        throw new Error(
+          `${response.status} error, do not make more than 3 requests per second`
+        );
+      if (!response.ok) throw new Error(`${response.status} error`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      if (!data.city) throw new Error('No City found');
+      console.log(
+        `You are in ${data.city[0] + data.city.slice(1).toLowerCase()}, ${
+          data.statename
+        }, ${data.country}`
+      );
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country not found (${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => {
+      console.error(`Something went wrong -- ${err.message}`);
+    });
+};
+
+btn.addEventListener('click', whereAmI);
