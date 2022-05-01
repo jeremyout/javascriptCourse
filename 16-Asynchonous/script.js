@@ -508,9 +508,9 @@ Handling rejected promises
 
 // The only way in which a fetch promise rejects is when a user loses their internet connection
 
-// btn.addEventListener('click', function () {
-//   getCountryData('portugal');
-// });
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
 
 // Errors propogate down the chain
 
@@ -741,7 +741,7 @@ Promise.reject(new Error('Problem!')).catch(x => console.error(x));
 /*
 Promisifying the Geolocation API
 */
-
+/*
 console.log('Getting position');
 
 const getPosition = function () {
@@ -794,3 +794,51 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
+*/
+
+/*
+Consuming promises with Async/Await
+*/
+
+// Since ES2017, there is an even better and easier way to consume promises, called Async/Await
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// Async/await is only about consuming promises, nothing to do with building them
+
+const whereAmI = async function () {
+  // Get Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+  // Reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // This is what we've done in the past, and is exactly the same as the new async/await below
+  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+  //   console.log(res)
+  // );
+
+  // The await here basically stops executions until the promise is fulfilled
+  //(until data has been fetched in this case)
+  // Since this is an async function, stopping execution here is non-blocking
+  // Since this is an async function, it is running asynchronously in the background
+  // Country data
+  const res = await fetch(
+    `https://restcountries.com/v2/name/${dataGeo.country}`
+  );
+  const data = await res.json();
+  console.log(data);
+  renderCountry(data[0]);
+};
+whereAmI();
+console.log('First');
+
+// Async/Await is just syntactic sugar over the then method in promises.
+// Behind the scenes we are still using promises, but async/await is just a different way
+// of consuming them
