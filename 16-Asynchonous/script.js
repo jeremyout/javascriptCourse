@@ -514,7 +514,7 @@ btn.addEventListener('click', function () {
 
 // Errors propogate down the chain
 
-getCountryData('australia');
+// getCountryData('australia');
 // With a 404 error, the fetch promise will still get fulfilled so our catch error cannot pickup on this error
 // In this case, we want to tell the user the country was not found
 
@@ -528,3 +528,101 @@ Throwing errors manually
 // It's the only way to generate an error on the screen for the user
 // Even more important, it's a bad practice to just leave rejected promises hanging around without
 // handling them. Always use .catch and if necessary you can also use finally
+
+/*
+Asynchronous behind the scenes: The event loop
+*/
+
+// JS runtime is a container that includes all the pieces necessary to execute js code
+// The heart of the JS runtime is the engine
+// Engine is composed of the Heap and the Call stack
+// Call stack is where code is executed from
+// Heap is where objects are stored in memory
+
+// Important to note, JS only has ONE thread of execution, no multitasking
+
+// Web APIs environment
+// APIs are provided to the engine
+// Examples: DOM, Timers, Fetch API, ...
+
+// Callback queue
+// Ready to be executted callback functions (coming from events)
+// When the call stack is empty, the event loop takes callbacks from the
+// callback queue and puts them in the call stack so that they can be executed
+
+// The event loop is the essential piece that makes asynchronous behavior possible in JS
+// Its the reason why we can have a non-blocking concurrency model in JS
+
+// A concurrency model is how a language handles multiple things happening at the same time
+
+// How can asynchronous code be executed in a non-blocking way if there is only one thread of
+// execution in the engine?
+
+// Code example - demo at 3:50 in video
+// const el = document.querySelector('img');
+// el.src = 'dog.jpg';
+// el.addEventListener('load', () => {
+//   el.classList.add('fadeIn');
+// });
+
+// fetch('https://someurl.com/api')
+// .then(res => console.log(res));
+
+// Everything related to the DOM is not really part of JS, but the web APIs
+// In the web APIs environment is where asynchronous tasks run
+
+// If the img would be loaded in a synchronous way, it would be doing so in the call stack and block
+// execution of the rest of the code. That's why loading images is asynchronous
+
+// Fetch method is also asynchronous so that it is not blocking
+
+// Once the image is loaded and the load event is emitted, the callback for the load event is put in
+// the callback queue
+
+// The callback queue is an ordered list of all the callback functions that are in line to be executed
+// Think of the callback queue as a todo list with tasks that the call stack will eventually have to
+// complete
+// In the case of setTimeout, if you set a timer for 5 seconds, the callback function will get put on
+// the callback queue after 5 seconds but it is NOT a guarantee that it will run right away. If there
+// are other functions on the callback queue, those will be executed first. The only guarantee is that
+// the timeout functions callback will not execute before 5 seconds, but it might execute after 5 seconds
+// have passed. It all depends on the state of the callback queue and another queue we will talk about
+// shortly
+
+// Another thing that is important to mention is that the callback queue also contains callbacks coming
+// from DOM events like clicks or keypresses, etc. DOM events are not really asynchronous behavior but
+// they still use the callback queue to run their attached callbacks.
+
+// Here is what the event loop does
+// - it looks into the call stack and determines whether its empty or not except for the global context
+// - if the call stack is currently empty, it will take the first callback from the callback queue
+//   and put it on the call stack to be executed. This is known as an event loop tick. Each time the
+//   event loop takes a callback from the callback queue, we say that there was an event loop tick.
+// - the event loop has the extremely important task of doing coordination between the call stack and
+//   the callbacks in the callback queue. The event loop is basically who decides exactly when each
+//   callback is executed. We can also say that the event loop does the orchestration of the entire JS
+//   runtime.
+
+// Another thing that becomes clear is that the JS language itself has no sense of time. That's because
+// everything that is asynchronous does not happen in the engine. It's the runtime who manages all the
+// asynchronous behavior and its the event loop who decides which code will be executed next. The engine
+// itself simply executes whatever code it is given.
+
+// With promises, things work in a slightly different way.
+// Let's say the data has finally arrived, so the fetch is done.
+// Callbacks related to promises don't actually go into the callaback queue
+// Instead, callbacks of promises have a special queue for themselves called the Microtasks queue
+// The microtask queue is like the callback queue, but for callbacks related to promises. It has
+// priority over the callaback queue!
+
+// So at the end of an event loop tick, after a callback has been taken from the callback queue, the
+// event loop will check if there are any callbacks in the microtask queue. If there are, it will run
+// all of them before it will run any more callbacks from the regular callback queue.
+
+// There are actually other microtasks, but that's not relevant here.
+
+// In practice microtasks can cut in line before all other regular callbacks.
+// If one microtask adds a new microtask, that new microtask is also executed before any callbacks
+// from the callback queue. This means that the microtasks queue can essentially starve the callback
+// queue because if we keep adding more and more microtasks the callbacks in the callback queue can
+// never execute. It's usually never a problem but it's worth mentioning.
