@@ -626,3 +626,22 @@ Asynchronous behind the scenes: The event loop
 // from the callback queue. This means that the microtasks queue can essentially starve the callback
 // queue because if we keep adding more and more microtasks the callbacks in the callback queue can
 // never execute. It's usually never a problem but it's worth mentioning.
+
+/*
+The event loop in practice
+*/
+
+console.log('Test start');
+setTimeout(() => console.log('0 second timer'), 0);
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+console.log('Test end');
+
+// The synchronous console.logs are the first output
+// Promise.resolve prints next because the microtasks queue has priority over the callback queue
+// finally, setTimeout callback is processed
+
+// You can't really do high precision things using javascript timers and promises
