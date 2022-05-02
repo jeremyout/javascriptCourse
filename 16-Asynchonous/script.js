@@ -819,7 +819,7 @@ const whereAmI = async function () {
     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
     if (!resGeo.ok) throw new Error('Problem getting location data');
     const dataGeo = await resGeo.json();
-    console.log(dataGeo);
+    // console.log(dataGeo);
 
     // This is what we've done in the past, and is exactly the same as the new async/await below
     // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
@@ -836,17 +836,45 @@ const whereAmI = async function () {
     );
     if (!res.ok) throw new Error('Problem getting country');
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     renderCountry(data[0]);
+
+    // This string will become the fulfilled value of the promise that is returned by the function
+    return `You are in ${
+      dataGeo.city[0] + dataGeo.city.slice(1).toLowerCase()
+    }, ${dataGeo.statename}, ${dataGeo.country}`;
   } catch (err) {
     console.error(`${err} 💣`);
     renderError(`💥 ${err.message}`);
+
+    // Reject promise returned from async function
+    throw err;
   }
 };
-whereAmI();
-whereAmI();
-whereAmI();
-console.log('First');
+
+console.log('1: Will get location');
+// const city = whereAmI();
+// console.log(city);
+// This below is mixing the new with the old for handling promises (Use async IIFE instead, shown below)
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err.message} 💥`))
+//   .finally(() => console.log('3: Finsihed getting location'));
+// If there is an error in the async function the promise that the async function returns is still fulfilled
+// and not rejected.
+// If we want to fix that (be able to catch the error here as well, we would have to re-throw the error)
+
+// Instead of creating a whole new function to async await a promise return, we can use an
+// async IIFE (Immediately Invoked Function Expression)
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`2: ${err.message} 💥`);
+  }
+  console.log('3: Finsihed getting location');
+})();
 
 // Async/Await is just syntactic sugar over the then method in promises.
 // Behind the scenes we are still using promises, but async/await is just a different way
