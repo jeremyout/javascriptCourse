@@ -801,7 +801,7 @@ Consuming promises with Async/Await
 */
 
 // Since ES2017, there is an even better and easier way to consume promises, called Async/Await
-
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -879,7 +879,7 @@ console.log('1: Will get location');
 // Async/Await is just syntactic sugar over the then method in promises.
 // Behind the scenes we are still using promises, but async/await is just a different way
 // of consuming them
-
+*/
 /*
 Error Handling with try...catch
 */
@@ -897,3 +897,36 @@ Error Handling with try...catch
 // } catch (err) {
 //   alert(err.message);
 // }
+
+/*
+Running promises in parallel
+*/
+
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    // Doing it like this works, but does them one after another
+    // const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // Allows us to get all the data in parallel, this returns a new promise, one that runs all of
+    // these promises at the same time.
+    // Promise.all receives an array and also returns an array
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+    console.log(data.map(d => d[0].capital));
+    // If one of the promises in a Promise.all rejects, the whole promise.all rejects as well
+    // Promise.all short circuits when one promise rejects
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+get3Countries('portugal', 'canada', 'tanzania');
+
+// whenever you have a situation in which you need to do multiple asynchronous operations at the same time
+// and operations that don't depend on one another then you should ALWAYS use Promise.all
