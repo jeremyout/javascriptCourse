@@ -901,7 +901,7 @@ Error Handling with try...catch
 /*
 Running promises in parallel
 */
-
+/*
 const get3Countries = async function (c1, c2, c3) {
   try {
     // Doing it like this works, but does them one after another
@@ -930,3 +930,67 @@ get3Countries('portugal', 'canada', 'tanzania');
 
 // whenever you have a situation in which you need to do multiple asynchronous operations at the same time
 // and operations that don't depend on one another then you should ALWAYS use Promise.all
+*/
+
+/*
+Other promise combinators: race, allSettled, and any
+*/
+
+// Promise.race -
+// Receives an array of promises and returns a promise
+// The promise returned by promise.race is settled as soon as one of the input promises settles
+// (Doesn't matter if the promise got rejected or fulfilled) Promise.race short circuits as soon as
+// one of the promises gets settled.
+// The first settled promise wins the race
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/italy`),
+    getJSON(`https://restcountries.com/v2/name/egypt`),
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+  ]);
+  console.log(res[0]);
+})();
+
+// In the real world, promise.race is very useful to prevent against never-ending promises or long running
+// promises
+
+const timeout = function (sec) {
+  // underscore means throwaway var
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long'));
+    }, sec * 1000);
+  });
+};
+Promise.race([
+  getJSON(`https://restcountries.com/v2/name/tanzania`),
+  timeout(0.01),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+// Promise.allSettled -
+// Takes in an array of promises, will return an array of all the settled promises
+// No matter if the promises got rejected or not
+// The difference here is that promise.allSettled will never short circuit
+// It will always return all the results of all the promises
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Success'),
+]).then(res => console.log(res));
+
+// Promise.any -
+// Even more modern, ES2021
+// Takes in an array of multiple promises and this one will return the first fulfilled promise
+// and ignore any rejected promises
+// Very similar to promise.race with the difference that rejected promises are ignored
+// The result of promise.any will always be a fulfilled promise unless all of them reject
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Another Success'),
+]).then(res => console.log(res));
+
+// The most important ones are definitely promise.all and promise.race
