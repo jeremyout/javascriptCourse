@@ -1,3 +1,33 @@
+// Importing module
+// Named imports need to be the same name and put inside braces
+// import {   addToCart, totalPrice as price, tq } from './shoppingCart.js';
+// addToCart('bread', 5);
+// console.log(price, tq);
+
+console.log('Importing module');
+
+// Import everything that is exported from the shoppingCart.js module
+// import * as ShoppingCart from './shoppingCart.js ';
+// ShoppingCart.addToCart('bread', 5);
+// console.log(ShoppingCart.totalPrice);
+
+import add, { cart } from './shoppingCart.js';
+add('apples', 300);
+add('pizza', 2);
+add('bread', 5);
+console.log(cart); // proof that this is not a copy, but a live connection
+// It's technically not a problem to import the same module twice, but
+// usually we don't do that
+
+// We could even mix all of them in the same import statement. If we
+// wanted, we could have named and default imports/exports at the same
+// time
+// import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js';
+// console.log(price);
+
+// In practice, we usually never mix named and default imports in the
+// same module
+
 /*
 An Overview of Modern JS Development
 */
@@ -137,3 +167,7 @@ An overview of modules in JS
 // Next up, The code in the imported module is executed. And with this,
 // the process of importing modules is finished. Then it is finally time
 // for the importing module to be executed.
+
+/*
+Exporting and importing ES6 Modules
+*/
