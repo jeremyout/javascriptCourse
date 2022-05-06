@@ -296,3 +296,39 @@ CommonJS Modules
 // const { addToCart } = require('./shoppingCart.js');
 // require is not defined in the browser environment but it is part of the
 // CommonJS specification
+
+/*
+Introduction to NPM
+*/
+
+// Why do we need a way to manage dependencies?
+// Before npm, we used to include external libraries right into our HTML
+// This would expose a global variable that we could use, that's what we did
+// in mapty for the leaflet library
+// This creates a couple of problems.
+// It doesn't make sense having the HTML load all of our js
+// Many times we would download a library file to our computer directly but
+// then when a new version would come out you would have to download the new
+// version and replace all the files.
+// Before npm there wasn't a sinlge repository that contained all the packages
+// that we might need.
+
+// Leaflet uses the commonJS module system. We cannot directly import it to our code
+// without a module bundler.
+
+import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+const state = {
+  cart: [
+    { product: 'bread', quantity: 5 },
+    { product: 'pizza', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+// This is the old way to clone a deeply nested object
+const stateClone = Object.assign({}, state);
+const stateDeepClone = cloneDeep(state); // Use lodash to perform a deep clone
+state.user.loggedIn = false;
+console.log(stateClone);
+
+// Now we can use lodash
+console.log(stateDeepClone); // Take note of the loggedIn state here, it is still true, despite setting false in the original
