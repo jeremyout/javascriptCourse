@@ -3,7 +3,7 @@
 // import {   addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // addToCart('bread', 5);
 // console.log(price, tq);
-
+/*
 console.log('Importing module');
 
 // Import everything that is exported from the shoppingCart.js module
@@ -27,7 +27,7 @@ console.log(cart); // proof that this is not a copy, but a live connection
 
 // In practice, we usually never mix named and default imports in the
 // same module
-
+*/
 /*
 An Overview of Modern JS Development
 */
@@ -187,7 +187,7 @@ Top level await (ES2022)
 // console.log('Something');
 // The await is now blocking execution. This can be helpful in some situations,
 // but also can be harmful.
-
+/*
 const getLastPost = async function () {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts');
   const data = await res.json();
@@ -208,3 +208,57 @@ console.log(lastPost2);
 // has a top-level await, then the importing module will wait for the imported
 // module to finish the blocking code. Demonstrated by the added code in
 // shoppingCart.js
+*/
+
+/*
+The module pattern
+*/
+
+// This is what used to be used before ES6 modules
+// It's important to know because it will still be in project and still a good
+// application of what we've been learning throughout the course
+
+// Just like in regular modules, the main goal of the module pattern is to
+// encapsulate functionality, to have private data, and to expose a public API
+// The best way of achieving all that is by using a function. Functions give us
+// private data by default and return values which can be our public API
+// Usually we write an IIFE because this way we don't have to call it seperately
+// and this way it is only called once. The only purpose of this function is to
+// create a new scope and return data just once.
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`
+    );
+  };
+  const orderStock = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.addToCart('pizza', 2);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost);
+
+// We are able to use the object and manipulate the data inside because of closures!
+// Closures allow a function to have access to all the variables that were present
+// at its birthplace
+
+// The problem is that if we wanted one module per file like we have for ES6 modules
+// then we would have to create different scripts and link all of them in the HTML.
+// And that creates a couple of problems. Have to be careful of the order in which
+// they are declared in the HTML, and we would have all the variables living in the
+// global scope, and finally we wouldn't be able to use them in a module bundler.
+// Using a module bundler is very important in modern js.
