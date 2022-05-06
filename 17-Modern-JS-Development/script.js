@@ -213,7 +213,7 @@ console.log(lastPost2);
 /*
 The module pattern
 */
-
+/*
 // This is what used to be used before ES6 modules
 // It's important to know because it will still be in project and still a good
 // application of what we've been learning throughout the course
@@ -262,3 +262,37 @@ console.log(ShoppingCart2.shippingCost);
 // they are declared in the HTML, and we would have all the variables living in the
 // global scope, and finally we wouldn't be able to use them in a module bundler.
 // Using a module bundler is very important in modern js.
+*/
+
+/*
+CommonJS Modules
+*/
+
+// Besides native ES modules and the module pattern, there are other module systems
+// that have been used by js in the past but they are not native js so they relied
+// on some external implementation. Two examples are AMD modules and CommonJS modules
+
+// CommonJS modules are important because they have been used in Node.js for almost
+// all of its existance. Only very recently ES6 modules were implemented in Node.js
+// And remember Node.js is a way of running js on a web server outside of a browser.
+// A big consequence of this is that almost all modules in the npm repository that
+// we talked about in the beginning of this section still use the commonJS module
+// system. npm was originally only intended for Node which uses commonJS. Now we
+// are basically stuck with commonJS
+
+// Just like in ES6 modules, in commonJS one file is one module.
+// We export something from a module like this:
+// export.addToCart = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(
+//       `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`
+//     );
+//   };
+// This won't work in the browser, but it would work in Node.js
+// The export keyword is an object that isn't defined in our code or
+// in the browser, but in Node.js it is an important object.
+
+// Import
+// const { addToCart } = require('./shoppingCart.js');
+// require is not defined in the browser environment but it is part of the
+// CommonJS specification
