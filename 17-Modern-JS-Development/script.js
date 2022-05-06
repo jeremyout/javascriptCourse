@@ -171,3 +171,40 @@ An overview of modules in JS
 /*
 Exporting and importing ES6 Modules
 */
+
+/*
+Top level await (ES2022)
+*/
+
+// We can now use the await keyword outside of an async function, which we
+// call top-level await.
+// This only works in modules! If we try this in a normal script, top-level
+// await would fail. Need type="module" on the script linking
+// console.log('Start Fetching...');
+// const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+// const data = await res.json();
+// console.log(data);
+// console.log('Something');
+// The await is now blocking execution. This can be helpful in some situations,
+// but also can be harmful.
+
+const getLastPost = async function () {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await res.json();
+  console.log(data[data.length - 1]);
+  return { title: data.at(-1).title, text: data.at(-1).body };
+};
+const lastPost = getLastPost(); // returns a promise
+console.log(lastPost);
+
+// Works, but not very clean
+// lastPost.then(last => console.log(last));
+
+// Now we can use top-level await
+const lastPost2 = await getLastPost();
+console.log(lastPost2);
+
+// Implication of using top-level await. If one module imports a module which
+// has a top-level await, then the importing module will wait for the imported
+// module to finish the blocking code. Demonstrated by the added code in
+// shoppingCart.js
