@@ -3,7 +3,7 @@
 // import {   addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // addToCart('bread', 5);
 // console.log(price, tq);
-/*
+
 console.log('Importing module');
 
 // Import everything that is exported from the shoppingCart.js module
@@ -18,7 +18,7 @@ add('bread', 5);
 console.log(cart); // proof that this is not a copy, but a live connection
 // It's technically not a problem to import the same module twice, but
 // usually we don't do that
-
+/*
 // We could even mix all of them in the same import statement. If we
 // wanted, we could have named and default imports/exports at the same
 // time
@@ -316,7 +316,9 @@ Introduction to NPM
 // Leaflet uses the commonJS module system. We cannot directly import it to our code
 // without a module bundler.
 
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js'; // keep for reference
+import cloneDeep from 'lodash-es'; // In all module bundlers, there is no need to specify the entire path to a module
+
 const state = {
   cart: [
     { product: 'bread', quantity: 5 },
@@ -332,3 +334,74 @@ console.log(stateClone);
 
 // Now we can use lodash
 console.log(stateDeepClone); // Take note of the loggedIn state here, it is still true, despite setting false in the original
+
+/*
+Building with Parcel and npm scripts
+*/
+
+// Parcel is just a build tool which is on npm
+// use npm i parcel to install
+// Used the --save-dev flag this time which created the
+// devDependencies in package.json
+
+// Parcel is a commnd line interface
+// Cannot run a command like parcel index.html
+// Parcel doesn't work with locally installed packages
+//   - Parcel was installed locally to the project
+// There are global installations of parcel, but more on that later
+
+// In order to use parcel in the console, we have two options
+// 1. We can use something called npx (application built-in to npm)
+//   - npx parcel index.html
+//      - index.html is the entry point because that's where we include
+//        our script.js
+// 2. or we can use npm scripts
+
+// In parcel, we can activate hot module replacement
+if (module.hot) {
+  module.hot.accept();
+}
+// This code is code that only parcel understands so this
+// will not make it into our final bundle because the browser is not
+// going to understand any of it.
+// Whenever one of the modules changes, a rebuild is triggered.
+// The new modified bundle will get injected into the browser
+// without without triggering a whole page reload.
+
+// In all module bundlers, there is no need to specify the whole
+// path to a module
+// Instead we can just do the new lodash-es import on line 320 above
+
+// Parcel will automatically find the path to the module
+// This works with all kinds of assets. Even HTML, CSS, SASS, or images,
+// and of course all kinds of modules. Not only ES6 modules, but also
+// commonJS modules
+
+// Parcel is also smart enough to automatically install modules
+// import cloneDeep from 'lodash';
+
+// Instead of using 'npx parcel index.html' like we were doing,
+// we can instead use npm scripts, and that's what we will use in
+// practice
+
+// npm scripts is basically just another way of running locally installed
+// packages in the command line.
+// They also allow us to automate repetitive tasks.
+
+// We can create a new script in the package.json (see the 'start' script)
+// This gets executed by entering 'npm run start'
+
+// Whenever we are done developing our project, it's time to build
+// the final bundle (The bundle that is compressed and has dead code
+// elimination). For that, we need another parcel command so we added
+// another script command to the package.json file (build script)
+// The build scripts gets executed by entering 'mpn run build'
+
+// We can also install packages globally
+// Installing parcel globally is done with: "npm install parcel -g"
+// This is how we installed the liveserver package before and that
+// allowed us to use it on every project. The big difference between
+// globally and locally installed packages is that we can use the global
+// tools directly in the command line without the intermediate step of
+// an npm script. Most of the tools advise developers to always install
+// the tools locally so that they are always on the latest version.
