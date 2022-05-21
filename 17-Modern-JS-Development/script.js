@@ -503,3 +503,7 @@ Review: Writing Clean and Modern JavaScript code
 //      create even more nested code.
 // - Whenever possible, run promises in parallel (Promise.all())
 // - Handle errors and promise rejections
+
+/*
+Let's fix some bad code, part 1
+*/
