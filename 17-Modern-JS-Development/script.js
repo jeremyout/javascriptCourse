@@ -457,3 +457,49 @@ import 'regenerator-runtime/runtime';
 
 // imports should be done at the top of the file but it is
 // fine for now because they will be hoisted
+
+/*
+Review: Writing Clean and Modern JavaScript code
+*/
+
+// One of the most important things when you code is that you should
+// write readable code
+// - Write code so that others can understand it
+// - Write code so that you can understand it in 1 year
+// - Avoid too 'clever' and overcomplicated solutions
+// - Use descriptive names: What do they contain?
+// - Use descriptive function names: What do they do?
+
+// General:
+// - Use the DRY principle: Don't repeat yourself (refactor)
+// - Don't pollute the global namespace, encapsulate instead
+// - Don't use var
+// - Use strong typed checks (=== and !==)
+
+// Functions:
+// - Generally, functions should only do one thing
+// - Don't use more than 3 function parameters
+// - Use default parameters whever possible
+// - Generally return the same data type as received
+// - Use arrow functions when they make code more readable
+
+// OOP:
+// - Use ES6 classes
+// - Encapsulate data and don't manipulate it from outside the class
+// - Implement method chaining
+// - Do not use arrow functions as methods (in regular objects)
+//    - Doing this won't give access to the this keyword
+
+// Avoiding nested code:
+// - Use early return (guard clauses)
+// - Use ternary (conditional) or logical operators instead of if
+// - Use multiple if instead of if/else if
+// - Avoid for loops, use array methods instead
+// - Avoid callback-based asynchronous APIs
+
+// Asynchronous code:
+// - Consume promises with async/await for best readability
+//    - The then/ catch methods require callback functions which
+//      create even more nested code.
+// - Whenever possible, run promises in parallel (Promise.all())
+// - Handle errors and promise rejections
