@@ -405,3 +405,55 @@ if (module.hot) {
 // tools directly in the command line without the intermediate step of
 // an npm script. Most of the tools advise developers to always install
 // the tools locally so that they are always on the latest version.
+
+/*
+Configuring Babel and Polyfilling
+*/
+
+// Parcel automatically uses babel to transpile our code
+// We can configure babel a lot if we want to, for example
+// defining what browsers should work.
+// We will mainly go with the defaults
+
+// A plugin is a specific js feature that we want to transpile
+// Instead of using single plugins for each of these features,
+// babel uses presets. A preset is a unch of plugins bundled
+// together.
+
+// Presets will determine which javascript features should be
+// compiled based on browser support. That will all happen
+// automatically.
+
+class Person {
+  #greeting = 'Hey';
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.#greeting}, ${this.name}`);
+  }
+}
+const jonas = new Person('Jonas');
+console.log('Jonas' ?? null);
+console.log(cart.find(el => el.quantity >= 2));
+Promise.resolve('TEST').then(x => console.log(x));
+
+import 'core-js/stable';
+
+// New additions to the language cannot be transpiled back to
+// ES5. Only syntax is easy to convert
+
+// New features have to be polyfilled
+// What polyfilling does is recreates the function and make
+// it available in the bundle so that the code can use it.
+// Polyfilling will polyfill everything even if we don't need it
+// If we wanted to, we can cherry pick the features we want to
+// polyfill, this will greatly reduce the bundle size
+// For example:
+// import 'core-js/stable/array/find';
+
+// There is still one feature that is not polyfi lled by core-js
+// so we always need to install regenerator-runtime
+// Polyfilling async functions:
+import 'regenerator-runtime/runtime';
+
+// imports should be done at the top of the file but it is
+// fine for now because they will be hoisted
