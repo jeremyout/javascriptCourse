@@ -1,0 +1,31 @@
+
+User stories
+- User Story: Description of the application's functionality from the user's perspective.
+- Common format: As a [type of user], I want [an action] so that [a benefit]
+
+    1. As a user, I want to search for recipes, so that I can find new ideas for meals.
+    2. As a user, I want to be able to update the number of servings, so that I can cook a 
+    meal for a different number of people.
+    3. As a user, I want to bookmark recipes so that I can review them later.
+    4. As a user, I want to be able to create my own recipes so that I have them all organized 
+    in the same app.
+    5. As a user, I want to be able to see my bookmarks and own recipes when I leave the app 
+    and come back later so that I can close the app safely after cooking.
+
+Features (in relation to the user stories above) - 
+- User story 1:
+    - Search functionality: input field to send request to API with seached keywords
+    - Display results with pagination
+    - Display recipe with cooking time, servings, and ingredients
+- User story 2:
+    - Change servings functionality: update all ingredients according to current number of servings
+- User story 3:
+    - Bookmarking functionality: display list of all bookmarked recipes
+- User story 4: 
+    - User can upload their own recipes
+    - User recipes will automatically be bookmarked
+    - Users can only see their own recipes, not recipes for other users
+- User story 5: 
+    - Store bookmark data in the browser using local storage
+    - On page load, read saved bookmarks from local storage and display
+
