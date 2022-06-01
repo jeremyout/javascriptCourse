@@ -29,3 +29,7 @@ Features (in relation to the user stories above) -
     - Store bookmark data in the browser using local storage
     - On page load, read saved bookmarks from local storage and display
 
+-----------
+
+- Package.json file gets added by running the 'npm init' command in the terminal
+- Parcel 2 installed as a Dev dependency using the 'npm i parcel@2 -D' command
