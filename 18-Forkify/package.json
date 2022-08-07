@@ -1,0 +1,20 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe Application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Jeremy Outinen",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.1",
+    "parcel": "^2.2.1"
+  },
+  "dependencies": {
+    "core-js": "^3.22.8",
+    "fracty": "^1.0.11",
+    "regenerator-runtime": "^0.13.9"
+  }
+}

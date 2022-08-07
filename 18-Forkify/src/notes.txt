@@ -1,0 +1,89 @@
+
+User stories
+- User Story: Description of the application's functionality from the user's perspective.
+- Common format: As a [type of user], I want [an action] so that [a benefit]
+
+    1. As a user, I want to search for recipes, so that I can find new ideas for meals.
+    2. As a user, I want to be able to update the number of servings, so that I can cook a 
+    meal for a different number of people.
+    3. As a user, I want to bookmark recipes so that I can review them later.
+    4. As a user, I want to be able to create my own recipes so that I have them all organized 
+    in the same app.
+    5. As a user, I want to be able to see my bookmarks and own recipes when I leave the app 
+    and come back later so that I can close the app safely after cooking.
+
+Features (in relation to the user stories above) - 
+- User story 1:
+    - Search functionality: input field to send request to API with seached keywords
+    - Display results with pagination
+    - Display recipe with cooking time, servings, and ingredients
+- User story 2:
+    - Change servings functionality: update all ingredients according to current number of servings
+- User story 3:
+    - Bookmarking functionality: display list of all bookmarked recipes
+- User story 4: 
+    - User can upload their own recipes
+    - User recipes will automatically be bookmarked
+    - Users can only see their own recipes, not recipes for other users
+- User story 5: 
+    - Store bookmark data in the browser using local storage
+    - On page load, read saved bookmarks from local storage and display
+
+-----------
+
+- Package.json file gets added by running the 'npm init' command in the terminal
+- Parcel 2 installed as a Dev dependency using the 'npm i parcel@2 -D' command
+
+-----------
+
+Why worry about architecture?
+- Architecture will give our project the Structure in which we can write our code
+- Like a house, software also needs a structure - the way we organize our code
+
+- Maintainability - When we build a project we always need to think about the future.
+- A project is never done, we need to be able to change it easily in the futute.
+
+- Expandability - We need to be able to easily add new features to a project
+
+- The perfect architecture is one that allows for structure, maintainability, and Expandability
+
+- We can create our own structure (like we did in Mapty), only works in really small projects
+- We can also opt for a well established architecture pattern like MVC, MVP, Flux, etc. (this project)
+- We can use a framework like React, Angular, Vue, Svelte, etc. (Takes care of the architecture for you)
+
+
+Components of any architecture
+ - Business logic
+    - Code that solves the actual business problem.
+    - Directly related to what the business does and what it needs.
+    - Example: sending messages, storing transactions, calculating taxes...
+ - State
+    - Essentially stores all the data about the application
+    - Should be the "single source of truth"
+    - UI should be kept in sync with the state
+    - State libraries exist (Redux, Mobx)
+ - HTTP Library
+    - Responsible for making and receiving AJAX requests
+    - Optional but almost always necessary in real-world apps
+ - Application logic (router)
+    - Code that is only concerned about the implementation of the application itself
+    - Handles navigation and UI events.
+ - Presentation logic (UI layer)
+    - Code that is concerned about the visible part of the application
+    - Essentially displays application state
+
+The model view controller (MVC) architecture
+Model
+- Business logic
+- state
+HTTP library
+
+Controller
+- Application logic
+- bridge between the model and the view (which don't know about one another)
+- Handles UI events and dispatches tasks to the model and view
+
+View
+- Presentation logic
+
+See slides from lecture for nice visuals
