@@ -29,7 +29,7 @@ const createRecipeObject = function (data) {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
-    // conditionally add a key to the object
+    // conditionally add a key to the object - test
     ...(recipe.key && { key: recipe.key }), // if there is a key present, then the end result would just be: key: recipe.key
   };
 };
