@@ -11,7 +11,7 @@
   "dependencies": {
     "core-js": "^3.22.5",
     "leaflet": "^1.8.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "lodash-es": "^4.17.23",
     "regenerator-runtime": "^0.13.9",
     "@babel/traverse": ">=7.23.2"
